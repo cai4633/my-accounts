@@ -1,5 +1,5 @@
 import React from "react"
-import "./PriceList.styl"
+import "./PriceList.less"
 import { Row, Col, Button, Typography } from "antd"
 import { IconFont }  from '@/index'
 

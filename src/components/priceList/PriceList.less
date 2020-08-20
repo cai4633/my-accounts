@@ -1,0 +1,25 @@
+@import '~antd/lib/style/themes/default.less';
+
+.price-list {
+  .ant-row {
+    .ant-col {
+      .ant-btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        &.edit {
+          background: @green-5;
+        }
+
+        &.delete {
+          background: @red-6;
+        }
+        .anticon {
+          svg {
+            fill: @red-1;
+          }
+        }
+      }
+    }
+  }
+}

@@ -48,6 +48,7 @@ const cssModuleRegex = /\.module\.css$/
 const sassRegex = /\.(scss|sass)$/
 const sassModuleRegex = /\.module\.(scss|sass)$/
 const stylusRegex = /\.(styl|stylus)$/
+const lessRegex = /\.(less)$/
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -435,6 +436,17 @@ module.exports = function (webpackEnv) {
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
                 "stylus-loader"
+              ),
+            },
+            // 添加less配置
+            {
+              test: lessRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 2,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                },
+                "less-loader"
               ),
             },
 

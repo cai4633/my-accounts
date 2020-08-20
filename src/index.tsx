@@ -1,9 +1,9 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import "common/stylus/index.styl"
+import "common/less/index.less"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
-import "antd/dist/antd.css"
+// import "antd/dist/antd.css"
 import { createFromIconfontCN }  from '@ant-design/icons'
 
 export const IconFont = createFromIconfontCN({

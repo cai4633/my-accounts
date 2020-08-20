@@ -1,5 +1,5 @@
 import React from "react"
-import "./ViewTab.styl"
+import "./ViewTab.less"
 import { Tabs } from "antd"
 
 const { TabPane } = Tabs
