@@ -1,10 +1,9 @@
 import React from "react"
 import Layout from "components/layout/Layout"
-import styled from "styled-components"
-import TagSection from "./edit/TagSection"
+import TagSection from "./edit/tagWrapper/TagSection"
 import NoteSection from "./edit/NoteSection"
 import CategorySection from "./edit/CategorySection"
-import NumberPadSection from "./edit/NumberPadSection"
+import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
 
 const Edit: React.FC = () => {
   return (

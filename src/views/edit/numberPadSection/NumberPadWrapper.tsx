@@ -1,5 +1,3 @@
-import React, { useState } from "react"
-import Layout from "components/layout/Layout"
 import styled from "styled-components"
 
 const NumberPadWrapper = styled.section`
@@ -10,10 +8,11 @@ const NumberPadWrapper = styled.section`
   .output {
     width: 100%;
     input {
+      font-size: 36px;
       text-align: right;
       width: 100%;
       box-sizing: border-box;
-      line-height: 3em;
+      line-height: 2em;
       padding: 0px 10px;
       box-shadow: inset 0px -5px 5px -5px rgba(0, 0, 0, 0.25), inset 0px 5px 5px -5px rgba(0, 0, 0, 0.25);
       -moz-user-select: none;
@@ -72,33 +71,5 @@ const NumberPadWrapper = styled.section`
     }
   }
 `
-const NumberPadSection: React.FC = () => {
-  const [output, setOutput] = useState("0")
-  return (
-    <NumberPadWrapper>
-      <div className="output">
-        <input defaultValue={output} />
-      </div>
-      <div className="pad">
-        <div className="button-wrapper">
-          <button className="white-1">1</button>
-          <button className="white-2">2</button>
-          <button className="white-3">3</button>
-          <button className="white-4">删除</button>
-          <button className="white-2">4</button>
-          <button className="white-3">5</button>
-          <button className="white-4">6</button>
-          <button className="white-5">清空</button>
-          <button className="white-3">7</button>
-          <button className="white-4">8</button>
-          <button className="white-5">9</button>
-          <button className="white-7">OK</button>
-          <button className="white-5">0</button>
-          <button className="dot white-6">.</button>
-        </div>
-      </div>
-    </NumberPadWrapper>
-  )
-}
 
-export default NumberPadSection
+export { NumberPadWrapper }

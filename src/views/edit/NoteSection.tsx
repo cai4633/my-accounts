@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import Layout from "components/layout/Layout"
 import styled from "styled-components"
 
 const NoteWrapper = styled.section`

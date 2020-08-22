@@ -1,6 +1,6 @@
 import React from "react"
 import "./App.less"
-import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom"
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 import Tag from 'views/Tag'
 import Edit from 'views/Edit'
 import Statistics from 'views/Statistics'
