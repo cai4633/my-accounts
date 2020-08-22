@@ -1,9 +1,6 @@
 import React from "react"
-import logo from "./logo.svg"
 import "./App.less"
 import { HashRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom"
-import Icon from "@/components/icon/Icon"
-import styled from "styled-components"
 import Tag from 'views/Tag'
 import Edit from 'views/Edit'
 import Statistics from 'views/Statistics'

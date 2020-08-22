@@ -1,12 +1,20 @@
-import React from 'react'
-import Layout from 'components/layout/Layout'
+import React from "react"
+import Layout from "components/layout/Layout"
+import styled from "styled-components"
+import TagSection from "./edit/TagSection"
+import NoteSection from "./edit/NoteSection"
+import CategorySection from "./edit/CategorySection"
+import NumberPadSection from "./edit/NumberPadSection"
 
-const Edit = ()=>{
-  return(
+const Edit: React.FC = () => {
+  return (
     <Layout>
-      <h1>编辑页</h1>
+      <TagSection></TagSection>
+      <NoteSection></NoteSection>
+      <CategorySection></CategorySection>
+      <NumberPadSection></NumberPadSection>
     </Layout>
   )
 }
 
-export default Edit;
+export default Edit
