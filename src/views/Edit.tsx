@@ -6,32 +6,19 @@ import CategorySection from "./edit/CategorySection"
 import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
 
 type Categories = "+" | "-"
-type StateType = { tags: string[]; note: string; category: Categories; output: string }
+type StateType = { selected: string[]; note: string; category: Categories; output: string }
 
 const Edit: React.FC = () => {
-  const [state, setState] = useState<StateType>({ tags: ["衣", "食", "住", "行"], note: "", category: "+", output: "0" })
+  const [state, setState] = useState<StateType>({ selected: [], note: "", category: "+", output: "0" })
+  const changeFunc = (obj: Partial<StateType>) => {
+    setState({ ...state, ...obj })
+  }
   return (
     <Layout>
-      <TagSection
-        tags={state.tags}
-        onchange={(tags: string[]) => {
-          setState({ ...state, tags })
-        }}></TagSection>
-      <NoteSection
-        note={state.note}
-        onchange={(note: string) => {
-          setState({ ...state, note })
-        }}></NoteSection>
-      <CategorySection
-        category={state.category}
-        onchange={(category: "+" | "-") => {
-          setState({ ...state, category })
-        }}></CategorySection>
-      <NumberPadSection
-        output={state.output}
-        onchange={(output: string) => {
-          setState({ ...state, output })
-        }}></NumberPadSection>
+      <TagSection selected={state.selected} onchange={(selected) => changeFunc({ selected })}></TagSection>
+      <NoteSection note={state.note} onchange={(note) => changeFunc({ note })}></NoteSection>
+      <CategorySection category={state.category} onchange={(category) => changeFunc({ category })}></CategorySection>
+      <NumberPadSection output={state.output} onchange={(output) => changeFunc({ output })}></NumberPadSection>
     </Layout>
   )
 }

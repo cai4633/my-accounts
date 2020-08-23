@@ -2,11 +2,13 @@ import React, { useState } from "react"
 import { TagWrapper } from "./TagWrapper"
 
 type Prop = {
-  tags: string[]
+  selected: string[]
   onchange: (tags: string[]) => void
 }
 const TagSection: React.FC<Prop> = (prop) => {
-  const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [tags, setTags] = useState(["衣", "食", "住", "行"])
+  const selectedTags = prop.selected
+  const setSelectedTags = prop.onchange
 
   // 添加标签
   const addTag = () => {
@@ -14,11 +16,11 @@ const TagSection: React.FC<Prop> = (prop) => {
     if (!name) {
       window.alert("你没有输入有效的标签名！")
       return
-    } else if (prop.tags.includes(name)) {
+    } else if (tags.includes(name)) {
       window.alert("标签名已经存在！")
       return
     } else {
-      prop.onchange([...prop.tags, name])
+      setTags([...tags, name])
     }
   }
   // 选中取消标签
@@ -37,7 +39,7 @@ const TagSection: React.FC<Prop> = (prop) => {
   return (
     <TagWrapper>
       <div className="tag-wrapper">
-        {prop.tags.map((tag: string) => {
+        {tags.map((tag: string) => {
           return (
             <span
               key={tag}

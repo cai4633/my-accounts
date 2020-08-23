@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { NumberPadWrapper } from "./NumberPadWrapper"
 import { generateOutput, isInputType } from "./generateOutput"
 
