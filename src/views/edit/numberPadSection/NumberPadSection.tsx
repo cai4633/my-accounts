@@ -2,9 +2,11 @@ import React, { useState } from "react"
 import { NumberPadWrapper } from "./NumberPadWrapper"
 import { generateOutput, isInputType } from "./generateOutput"
 
+type Prop = { output: string; onchange: (output: string) => void }
 const MAX_LENGTH = 14
-const NumberPadSection: React.FC = () => {
-  const [output, _setOutput] = useState("0")
+const NumberPadSection: React.FC<Prop> = (prop) => {
+  const output = prop.output
+  const _setOutput = prop.onchange
   const setOutput = (value: string) => {
     if (value.length >= MAX_LENGTH) {
       value = value.slice(0, MAX_LENGTH)

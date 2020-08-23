@@ -23,11 +23,14 @@ const CategoryWrapper = styled.section`
     }
   }
 `
-const NoteSection: React.FC = () => {
-  const map = { "+": "收入", "-": "支出" }
-  type KeyType = keyof typeof map
+
+const map = { "+": "收入", "-": "支出" }
+type KeyType = keyof typeof map
+type Prop = { category: KeyType; onchange: (category: KeyType) => void }
+const NoteSection: React.FC<Prop> = (prop) => {
   const categorys: KeyType[] = ["+", "-"]
-  const [index, setIndex] = useState<KeyType>("+")
+  const index = prop.category
+  const setIndex = prop.onchange
   const clickFn = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
     let val = (e.target as HTMLElement).id as KeyType

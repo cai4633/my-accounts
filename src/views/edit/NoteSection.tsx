@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 
+type Prop = { note: string; onchange: (note: string) => void }
 const NoteWrapper = styled.section`
   text-align: left;
   background-color: #f5f5f5;
@@ -11,9 +12,9 @@ const NoteWrapper = styled.section`
     color: #333;
   }
 `
-const NoteSection: React.FC = () => {
-  const [value, setValue] = useState("")
-  console.log(value)
+const NoteSection: React.FC<Prop> = (prop) => {
+  const value = prop.note
+  const setValue = prop.onchange
   const changeValue = (e: React.FocusEvent<HTMLInputElement>) => {
     setValue(e.target.value)
   }
