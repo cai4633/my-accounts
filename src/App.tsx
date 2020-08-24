@@ -5,12 +5,14 @@ import Tags from '@/views/Tags'
 import Edit from 'views/Edit'
 import Statistics from 'views/Statistics'
 import NoMatch from 'views/NoMatch'
+import Tag from "./views/tag/Tag"
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/tags" component={Tags} />
+        <Route exact path="/tags/:tagId" component={Tag} />
         <Route exact path="/edit" component={Edit} />
         <Route exact path="/statistics" component={Statistics} />
         <Redirect exact from="/" to="/tags"></Redirect>

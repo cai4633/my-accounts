@@ -6,7 +6,7 @@ import CategorySection from "./edit/CategorySection"
 import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
 
 type Categories = "+" | "-"
-type StateType = { selected: string[]; note: string; category: Categories; output: string }
+type StateType = { selected: number[]; note: string; category: Categories; output: string }
 
 const Edit: React.FC = () => {
   const [state, setState] = useState<StateType>({ selected: [], note: "", category: "+", output: "0" })
