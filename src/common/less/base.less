@@ -1,4 +1,4 @@
-@import './variable.less';
+@import "./variable.less";
 
 body {
   margin: 0;
@@ -9,6 +9,14 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.clearfix {
+  zoom: 1;
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
 }

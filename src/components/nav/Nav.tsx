@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { NavLink } from "react-router-dom"
 
 const NavWrapper = styled.nav`
+  background-color: #fff;
   ul {
     display: flex;
     vertical-align: top;
@@ -16,7 +17,7 @@ const NavWrapper = styled.nav`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        color: rgba(0, 0, 0, .3);
+        color: rgba(0, 0, 0, 0.3);
         .icon {
           margin-bottom: 5px;
         }
@@ -34,7 +35,7 @@ function Nav() {
     <NavWrapper>
       <ul>
         <li>
-          <NavLink to="/tag" activeClassName="selected">
+          <NavLink to="/tags" activeClassName="selected">
             <Icon name="tag"></Icon>标签
           </NavLink>
         </li>

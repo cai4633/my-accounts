@@ -8,6 +8,7 @@ export const TagWrapper = styled.section`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
+  background-color: #fff;
   .tag-wrapper {
     span {
       display: inline-block;

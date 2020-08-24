@@ -1,12 +1,13 @@
-import React, { useState } from "react"
+import React from "react"
 import { TagWrapper } from "./TagWrapper"
+import { useTag } from "@/common/ts/useTag"
 
 type Prop = {
   selected: string[]
   onchange: (tags: string[]) => void
 }
 const TagSection: React.FC<Prop> = (prop) => {
-  const [tags, setTags] = useState(["衣", "食", "住", "行"])
+  const { tags, setTags } = useTag()
   const selectedTags = prop.selected
   const setSelectedTags = prop.onchange
 

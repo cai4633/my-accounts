@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 const NumberPadWrapper = styled.section`
   display: flex;
+  background-color: #fff;
   flex-direction: column;
   flex: 1;
   min-height: 20px;
