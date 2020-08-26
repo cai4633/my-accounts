@@ -1,9 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 
-type Prop = { title: string }
+type Prop = {
+  title: string
+  onClick?: () => void
+  backgroundColor?: string      
+}
 
-const _Button = styled.div`
+const Container = styled.div`
   text-align: center;
   padding: 44px;
   span {
@@ -18,11 +22,11 @@ const _Button = styled.div`
   }
 `
 
- const Button: React.FC<Prop> = (prop) => {
+const Button: React.FC<Prop> = (prop) => {
   return (
-    <_Button>
-      <span>{prop.title}</span>
-    </_Button>
+    <Container onClick={prop.onClick}>
+      <span style={{ backgroundColor: prop.backgroundColor }}>{prop.title}</span>
+    </Container>
   )
 }
 

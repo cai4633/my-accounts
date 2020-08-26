@@ -31,6 +31,7 @@ const NoteSection: React.FC<Prop> = (prop) => {
   const categorys: KeyType[] = ["+", "-"]
   const index = prop.category
   const setIndex = prop.onchange
+  
   const clickFn = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
     let val = (e.target as HTMLElement).id as KeyType

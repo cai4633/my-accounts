@@ -4,7 +4,7 @@ import { useTag, TagItem } from "common/ts/useTag"
 import styled from "styled-components"
 import Icon from "@/components/icon/Icon"
 import Button from "@/components/button/Button"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
 const TagsContainer = styled.div`
   background-color: #fff;
@@ -27,8 +27,10 @@ const TagsContainer = styled.div`
 
 const Tags = () => {
   const { tags, setTags } = useTag()
-  console.log(tags)
-
+  const history = useHistory()
+  const addTag = () => {
+    history.push("/addTag")
+  }
   return (
     <Layout>
       <TagsContainer>
@@ -45,7 +47,9 @@ const Tags = () => {
           })}
         </ol>
       </TagsContainer>
-      <Button title="新建标签"> </Button>
+      <div className="btn-wrapper">
+        <Button title="新建标签" onClick={addTag}></Button>
+      </div>
     </Layout>
   )
 }

@@ -23,7 +23,7 @@ const Main = styled.main`
 function Layout(prop: any) {
   return (
     <Wrapper>
-      <Main>{prop.children}</Main>
+      <Main className={prop.className}>{prop.children}</Main>
       <Nav></Nav>
     </Wrapper>
   )

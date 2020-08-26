@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-type Prop = { note: string; onchange: (note: string) => void }
+type Prop = { note: string; onchange: (note: string) => void; placeholder?: string; title?: string }
 const NoteWrapper = styled.section`
   text-align: left;
   background-color: #f5f5f5;
@@ -21,8 +21,8 @@ const NoteSection: React.FC<Prop> = (prop) => {
 
   return (
     <NoteWrapper>
-      <span>备注</span>
-      <input type="text" placeholder="在这里填写备注" defaultValue={value} onBlur={changeValue} />
+      <span>{prop.title || "备注"}</span>
+      <input type="text" placeholder={prop.placeholder || "在这里填写备注"} defaultValue={value} onBlur={changeValue} />
     </NoteWrapper>
   )
 }
