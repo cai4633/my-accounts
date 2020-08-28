@@ -7,23 +7,6 @@ import NoteSection from "views/edit/NoteSection"
 import Layout from "@/components/layout/Layout"
 import Button from "@/components/button/Button"
 
-const TagMap = {
-  edit: {
-    title: "编辑标签",
-    value: "删除标签",
-  },
-  add: {
-    title: "添加标签",
-    value: "添加标签",
-  },
-}
-
-type TagType = keyof typeof TagMap
-type Prop = {
-  placeholder?: string
-  type: TagType
-  btnBackground?: string
-}
 const MyLayout = styled(Layout)`
   font-size: 16px;
   position: relative;
@@ -60,26 +43,57 @@ const MyLayout = styled(Layout)`
     }
   }
 `
+
+type TagType = "edit" | "add"
+type Prop = {
+  placeholder?: string
+  type: TagType
+  btnBackground?: string
+}
+
 const Tag: React.FC<Prop> = (prop) => {
   type Params = { tagId: string }
-  const { tags, setTags } = useTag()
-  const { tagId } = useParams<Params>()
+  const { tags, findTag, setTags, updateTag, deleteTag } = useTag()
+  const { tagId: id } = useParams<Params>()
+  const tagid = findTag(window.parseInt(id))
   const history = useHistory()
-  const tagName = tagId ? tags[window.parseInt(tagId)].name : ""
+  const TagMap = {
+    edit: {
+      title: "编辑标签",
+      value: "删除标签",
+      clickHandle: () => {
+        deleteTag(window.parseInt(id))
+      },
+    },
+    add: {
+      title: "添加标签",
+      value: "添加标签",
+      clickHandle: () => {},
+    },
+  }
+  const tagName = tagid >= 0 ? tags[tagid].name : ""
   const goback = () => {
     history.goBack()
   }
+  const Note = (
+    <NoteSection
+      note={tagName}
+      onchange={(tag: string) => {
+        updateTag(tagid, tag)
+      }}
+      title="标签名"
+      placeholder={prop.placeholder || "在这里填写备注"}></NoteSection>
+  )
+
   return (
     <MyLayout className="tag">
       <header>
         <Icon name="left" onClick={goback}></Icon>
         {TagMap[prop.type].title}
       </header>
-      <main>
-        <NoteSection note={tagName} onchange={() => {}} title="标签名" placeholder={prop.placeholder || "在这里填写备注"}></NoteSection>
-      </main>
+      <main>{tagid !== -1 ? Note : "标签不存在"}</main>
       <div className="button-wrapper">
-        <Button title={TagMap[prop.type].value} backgroundColor={prop.btnBackground}></Button>
+        <Button title={TagMap[prop.type].value} backgroundColor={prop.btnBackground} onClick={TagMap[prop.type].clickHandle}></Button>
       </div>
     </MyLayout>
   )
