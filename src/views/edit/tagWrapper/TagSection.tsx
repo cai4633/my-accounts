@@ -8,24 +8,10 @@ type Prop = {
   onchange: (tags: number[]) => void
 }
 const TagSection: React.FC<Prop> = (prop) => {
-  const { tags, setTags } = useTag()
+  const { tags, setTags, addTag } = useTag()
   const selectedTags = prop.selected
   const setSelectedTags = prop.onchange
 
-  // 添加标签
-  const addTag = () => {
-    const tagNames = tags.map((tag) => tag.name)
-    const name = window.prompt("请输入你要添加的标签名")
-    if (!name) {
-      window.alert("你没有输入有效的标签名！")
-      return
-    } else if (tagNames.includes(name)) {
-      window.alert("标签名已经存在！")
-      return
-    } else {
-      setTags([...tags, { id: createTagId(), name }])
-    }
-  }
   // 选中取消标签
   const toggleSelected = (tagId: number) => {
     const arr = selectedTags.slice()
@@ -56,7 +42,12 @@ const TagSection: React.FC<Prop> = (prop) => {
           )
         })}
       </div>
-      <button onClick={addTag}>新增标签</button>
+      <button
+        onClick={() => {
+          addTag()
+        }}>
+        新增标签
+      </button>
     </TagWrapper>
   )
 }

@@ -44,7 +44,7 @@ const MyLayout = styled(Layout)`
   }
 `
 
-type TagType = "edit" | "add"
+type TagType = "edit"
 type Prop = {
   placeholder?: string
   type: TagType
@@ -53,7 +53,7 @@ type Prop = {
 
 const Tag: React.FC<Prop> = (prop) => {
   type Params = { tagId: string }
-  const { tags, findTag, setTags, updateTag, deleteTag } = useTag()
+  const { tags, findTag, updateTag, deleteTag } = useTag()
   const { tagId: id } = useParams<Params>()
   const tagid = findTag(window.parseInt(id))
   const history = useHistory()
@@ -64,11 +64,6 @@ const Tag: React.FC<Prop> = (prop) => {
       clickHandle: () => {
         deleteTag(window.parseInt(id))
       },
-    },
-    add: {
-      title: "添加标签",
-      value: "添加标签",
-      clickHandle: () => {},
     },
   }
   const tagName = tagid >= 0 ? tags[tagid].name : ""
@@ -91,7 +86,7 @@ const Tag: React.FC<Prop> = (prop) => {
         <Icon name="left" onClick={goback}></Icon>
         {TagMap[prop.type].title}
       </header>
-      <main>{tagid !== -1 ? Note : "标签不存在"}</main>
+      <main>{tagid === -1 && id ? "标签不存在" : Note}</main>
       <div className="button-wrapper">
         <Button title={TagMap[prop.type].value} backgroundColor={prop.btnBackground} onClick={TagMap[prop.type].clickHandle}></Button>
       </div>

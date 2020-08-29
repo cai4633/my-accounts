@@ -1,11 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-type Prop = {
-  title: string
-  onClick?: () => void
-  backgroundColor?: string      
-}
+type Prop = { backgroundColor?: string } & React.HTMLAttributes<HTMLDivElement>
 
 const Container = styled.div`
   text-align: center;
@@ -23,9 +19,10 @@ const Container = styled.div`
 `
 
 const Button: React.FC<Prop> = (prop) => {
+  const { title, backgroundColor, ...rest } = prop
   return (
     <Container onClick={prop.onClick}>
-      <span style={{ backgroundColor: prop.backgroundColor }}>{prop.title}</span>
+      <span style={{ backgroundColor }}>{title}</span>
     </Container>
   )
 }

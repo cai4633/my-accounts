@@ -26,11 +26,8 @@ const TagsContainer = styled.div`
 `
 
 const Tags = () => {
-  const { tags, setTags } = useTag()
+  const { tags, setTags, addTag } = useTag()
   const history = useHistory()
-  const addTag = () => {
-    history.push("/addTag")
-  }
   return (
     <Layout>
       <TagsContainer>
@@ -48,7 +45,7 @@ const Tags = () => {
         </ol>
       </TagsContainer>
       <div className="btn-wrapper">
-        <Button title="新建标签" onClick={addTag}></Button>
+        <Button title="新建标签" onClick={() => [addTag()]}></Button>
       </div>
     </Layout>
   )
