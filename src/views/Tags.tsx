@@ -1,6 +1,6 @@
 import React from "react"
 import Layout from "components/layout/Layout"
-import { useTag, TagItem } from "common/ts/useTag"
+import { useTag } from "common/ts/useTag"
 import styled from "styled-components"
 import Icon from "@/components/icon/Icon"
 import Button from "@/components/button/Button"
@@ -32,7 +32,7 @@ const Tags = () => {
     <Layout>
       <TagsContainer>
         <ol>
-          {tags.map((tag: TagItem) => {
+          {tags.map((tag: MyTypes.TagItem) => {
             return (
               <li key={tag.id} className="clearfix">
                 <Link to={"/tags/" + tag.id}>

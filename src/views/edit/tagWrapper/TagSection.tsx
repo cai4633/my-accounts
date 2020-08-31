@@ -1,13 +1,10 @@
 import React from "react"
 import { TagWrapper } from "./TagWrapper"
-import { useTag, TagItem } from "@/common/ts/useTag"
+import { useTag } from "@/common/ts/useTag"
 import { createTagId } from "@/common/ts/util"
 
-type Prop = {
-  selected: number[]
-  onchange: (tags: number[]) => void
-}
-const TagSection: React.FC<Prop> = (prop) => {
+
+const TagSection: React.FC<MyTypes.Prop> = (prop) => {
   const { tags, setTags, addTag } = useTag()
   const selectedTags = prop.selected
   const setSelectedTags = prop.onchange
@@ -28,7 +25,7 @@ const TagSection: React.FC<Prop> = (prop) => {
   return (
     <TagWrapper>
       <div className="tag-wrapper">
-        {tags.map((tag: TagItem) => {
+        {tags.map((tag: MyTypes.TagItem) => {
           return (
             <span
               key={tag.id}

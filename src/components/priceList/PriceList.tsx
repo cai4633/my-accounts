@@ -4,15 +4,9 @@ import { Row, Col, Button, Typography } from "antd"
 import { IconFont }  from '@/index'
 
 const { Text } = Typography
-interface PropType {
-  items: Price.Item[]
-  onModifyItem: Function
-  onDeleteItem: Function
-}
 
-export default ({ items, onModifyItem, onDeleteItem }: PropType) => {
+export default ({ items, onModifyItem, onDeleteItem }: MyTypes.PropType) => {
   return (
-    
     <div className="price-list">
       {items.map((item) => (
         <Row key={item.id} align="middle">

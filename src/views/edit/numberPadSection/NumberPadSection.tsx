@@ -2,7 +2,11 @@ import React from "react"
 import { NumberPadWrapper } from "./NumberPadWrapper"
 import { generateOutput, isInputType } from "./generateOutput"
 
-type Prop = { output: string; onchange: (output: string) => void }
+type Prop = {
+  output: string
+  onchange: (output: string) => void
+  onOk: () => void
+}
 const MAX_LENGTH = 14
 const NumberPadSection: React.FC<Prop> = (prop) => {
   const output = prop.output
@@ -20,6 +24,7 @@ const NumberPadSection: React.FC<Prop> = (prop) => {
     }
     if (value === "OK") {
       //TODO
+      prop.onOk()
       return
     }
     if (isInputType(value)) {

@@ -40,7 +40,7 @@ function Nav() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/edit" activeClassName="selected">
+          <NavLink to="/money" activeClassName="selected">
             <Icon name="money"></Icon>记一笔
           </NavLink>
         </li>

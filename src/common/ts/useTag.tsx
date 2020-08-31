@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { createTagId } from "./util"
 
-export type TagItem = { id: number; name: string }
 const TAGS = "tags"
 
 function useTag() {
@@ -13,7 +12,7 @@ function useTag() {
         { id: createTagId(), name: "行" },
       ])
   )
-  const [tags, setTags] = useState<TagItem[]>(defaultTags)
+  const [tags, setTags] = useState<MyTypes.TagItem[]>(defaultTags)
   useEffect(() => {
     localStorage.setItem(TAGS, JSON.stringify(tags))
   }, [tags])
