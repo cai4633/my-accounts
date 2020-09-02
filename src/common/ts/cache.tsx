@@ -1,4 +1,4 @@
-const TAGS = "__tags__"
+// const TAGS = "__tags__"
 const RECORDS = "__records__"
 
 class Storage {

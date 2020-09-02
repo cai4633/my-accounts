@@ -6,6 +6,9 @@ import Icon from "@/components/icon/Icon"
 import Button from "@/components/button/Button"
 import { Link, useHistory } from "react-router-dom"
 
+const LayoutWrapper = styled.div`
+  background-color: #e5e5e5;
+`
 const TagsContainer = styled.div`
   background-color: #fff;
   & > ol {
@@ -29,25 +32,27 @@ const Tags = () => {
   const { tags, setTags, addTag } = useTag()
   const history = useHistory()
   return (
-    <Layout>
-      <TagsContainer>
-        <ol>
-          {tags.map((tag: MyTypes.TagItem) => {
-            return (
-              <li key={tag.id} className="clearfix">
-                <Link to={"/tags/" + tag.id}>
-                  {tag.name}
-                  <Icon name="right"></Icon>
-                </Link>
-              </li>
-            )
-          })}
-        </ol>
-      </TagsContainer>
-      <div className="btn-wrapper">
-        <Button title="新建标签" onClick={() => [addTag()]}></Button>
-      </div>
-    </Layout>
+    <LayoutWrapper>
+      <Layout>
+        <TagsContainer>
+          <ol>
+            {tags.map((tag: MyTypes.TagItem) => {
+              return (
+                <li key={tag.id} className="clearfix">
+                  <Link to={"/tags/" + tag.id}>
+                    {tag.name}
+                    <Icon name="right"></Icon>
+                  </Link>
+                </li>
+              )
+            })}
+          </ol>
+        </TagsContainer>
+        <div className="btn-wrapper">
+          <Button title="新建标签" onClick={() => [addTag()]}></Button>
+        </div>
+      </Layout>
+    </LayoutWrapper>
   )
 }
 

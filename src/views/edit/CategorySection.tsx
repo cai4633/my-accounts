@@ -27,7 +27,7 @@ const CategoryWrapper = styled.section`
 const map = { "+": "收入", "-": "支出" }
 type KeyType = keyof typeof map
 type Prop = { category: KeyType; onchange: (category: KeyType) => void }
-const NoteSection: React.FC<Prop> = (prop) => {
+const CategorySection: React.FC<Prop> = (prop) => {
   const categorys: KeyType[] = ["+", "-"]
   const index = prop.category
   const setIndex = prop.onchange
@@ -51,4 +51,4 @@ const NoteSection: React.FC<Prop> = (prop) => {
   )
 }
 
-export default NoteSection
+export default CategorySection

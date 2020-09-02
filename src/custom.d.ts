@@ -11,20 +11,31 @@ declare namespace MyTypes {
     }
   }
 
-  type RecordItem = { selected: number[]; note: string; category: Categories; output: string }
-
+  type MoneyState = Omit<RecordItem, "createAt">
+  
   type Categories = "+" | "-"
-
+  
   type TagItem = { id: number; name: string }
-
+  
   interface PropType {
     items: PriceItem[]
     onModifyItem: Function
     onDeleteItem: Function
   }
-
+  
   type Prop = {
     selected: number[]
     onchange: (tags: number[]) => void
+  }
+  
+  type RecordItem = { selected: number[]; note: string; category: Categories; output: string; createAt: string }
+  
+  interface RecordOrdersItem {
+    [key: string]: MyTypes.RecordItem[]
+  }
+
+  interface RecordOrders<T = RecordOrdersItem> {
+    "+": T
+    "-": T
   }
 }

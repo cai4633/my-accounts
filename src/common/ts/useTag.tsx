@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import { createTagId } from "./util"
 
 const TAGS = "tags"
-
 function useTag() {
   const defaultTags = JSON.parse(
     localStorage.getItem(TAGS) || JSON.stringify([

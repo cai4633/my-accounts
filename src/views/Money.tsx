@@ -5,14 +5,15 @@ import NoteSection from "./edit/NoteSection"
 import CategorySection from "./edit/CategorySection"
 import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
 import { Record } from "@/common/ts/cache"
+import dayjs from "dayjs"
 
 const Money: React.FC = () => {
-  const [state, setState] = useState<MyTypes.RecordItem>({ selected: [], note: "", category: "+", output: "0" })
-  const changeFunc = (obj: Partial<MyTypes.RecordItem>) => {
+  const [state, setState] = useState<MyTypes.MoneyState>({ selected: [], note: "", category: "+", output: "0" })
+  const changeFunc = (obj: Partial<MyTypes.MoneyState>) => {
     setState({ ...state, ...obj })
   }
   const submit = () => {
-    Record.set([...Record.get(), state])
+    Record.set([...Record.get(), { ...state, createAt: dayjs().format('YYYY-MM-DD') }])
   }
   return (
     <Layout>
