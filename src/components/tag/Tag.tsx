@@ -2,26 +2,14 @@ import React from "react"
 import { useParams, useHistory } from "react-router-dom"
 import { useTag } from "@/common/ts/useTag"
 import styled from "styled-components"
-import Icon from "@/components/icon/Icon"
 import NoteSection from "views/edit/NoteSection"
 import Layout from "@/components/layout/Layout"
 import Button from "@/components/button/Button"
+import MHeader from "components/m-header/MHeader"
 
 const MyLayout = styled(Layout)`
   font-size: 16px;
   position: relative;
-  header {
-    text-align: center;
-    position: relative;
-    line-height: 3em;
-    background-color: #fff;
-    svg {
-      position: absolute;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
   main {
     margin-top: 8px;
     section {
@@ -82,10 +70,7 @@ const Tag: React.FC<Prop> = (prop) => {
 
   return (
     <MyLayout className="tag">
-      <header>
-        <Icon name="left" onClick={goback}></Icon>
-        {TagMap[prop.type].title}
-      </header>
+      <MHeader>编辑标签</MHeader>
       <main>{tagid === -1 ? "标签不存在或者已删除" : Note}</main>
       <div className="button-wrapper">
         <Button title={TagMap[prop.type].value} backgroundColor={prop.btnBackground} onClick={TagMap[prop.type].clickHandle}></Button>

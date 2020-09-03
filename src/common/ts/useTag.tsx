@@ -2,11 +2,12 @@ import { useState, useEffect } from "react"
 import { createTagId } from "./util"
 
 const __TAGS__ = "tags"
-const allTags = () => [
+const generateAllTags = () => [
   { id: createTagId(), name: "服饰", category: "-", icon: "clothes" },
   { id: createTagId(), name: "餐饮", category: "-", icon: "food" },
   { id: createTagId(), name: "住房", category: "-", icon: "house" },
   { id: createTagId(), name: "交通", category: "-", icon: "traffic" },
+  { id: createTagId(), name: "购物", category: "-", icon: "shopping" },
   { id: createTagId(), name: "旅游", category: "-", icon: "trip" },
   { id: createTagId(), name: "日用品", category: "-", icon: "commodity" },
   { id: createTagId(), name: "零食", category: "-", icon: "snack" },
@@ -14,13 +15,12 @@ const allTags = () => [
   { id: createTagId(), name: "长辈", category: "-", icon: "parents" },
   { id: createTagId(), name: "孩子", category: "-", icon: "children" },
   { id: createTagId(), name: "社交", category: "-", icon: "communication" },
-  { id: createTagId(), name: "购物", category: "-", icon: "shopping" },
   { id: createTagId(), name: "数码", category: "-", icon: "digital" },
   { id: createTagId(), name: "通讯", category: "-", icon: "message" },
   { id: createTagId(), name: "烟酒", category: "-", icon: "wine" },
 ]
 function useTag() {
-  const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(allTags()))
+  const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(generateAllTags().slice(0,6)))
   const [tags, setTags] = useState<MyTypes.TagItem[]>(defaultTags)
   useEffect(() => {
     localStorage.setItem(__TAGS__, JSON.stringify(tags))

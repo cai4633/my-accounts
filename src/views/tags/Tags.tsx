@@ -56,7 +56,7 @@ const Tags = () => {
               )
             })}
             <li>
-              <Link to="/" onClick={() => [addTag()]}>
+              <Link to="/addTags">
                 <Icon name="add"></Icon>
                 <span className="name">添加</span>
               </Link>
