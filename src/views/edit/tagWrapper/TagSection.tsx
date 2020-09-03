@@ -1,11 +1,10 @@
 import React from "react"
 import { TagWrapper } from "./TagWrapper"
 import { useTag } from "@/common/ts/useTag"
-import { createTagId } from "@/common/ts/util"
 
 
 const TagSection: React.FC<MyTypes.Prop> = (prop) => {
-  const { tags, setTags, addTag } = useTag()
+  const { tags, addTag } = useTag()
   const selectedTags = prop.selected
   const setSelectedTags = prop.onchange
 

@@ -1,7 +1,7 @@
 import React from "react"
 import "./App.less"
 import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom"
-import Tags from '@/views/Tags'
+import Tags from '@/views/tags/Tags'
 import Money from '@/views/Money'
 import Statistics from 'views/Statistics'
 import NoMatch from 'views/NoMatch'

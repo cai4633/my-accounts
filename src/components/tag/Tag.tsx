@@ -86,7 +86,7 @@ const Tag: React.FC<Prop> = (prop) => {
         <Icon name="left" onClick={goback}></Icon>
         {TagMap[prop.type].title}
       </header>
-      <main>{tagid === -1 ? "标签不存在" : Note}</main>
+      <main>{tagid === -1 ? "标签不存在或者已删除" : Note}</main>
       <div className="button-wrapper">
         <Button title={TagMap[prop.type].value} backgroundColor={prop.btnBackground} onClick={TagMap[prop.type].clickHandle}></Button>
       </div>

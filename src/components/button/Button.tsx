@@ -19,7 +19,7 @@ const Container = styled.div`
 `
 
 const Button: React.FC<Prop> = (prop) => {
-  const { title, backgroundColor, ...rest } = prop
+  const { title, backgroundColor } = prop
   return (
     <Container onClick={prop.onClick}>
       <span style={{ backgroundColor }}>{title}</span>

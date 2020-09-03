@@ -2,6 +2,7 @@ import React from "react"
 import Icon from "@/components/icon/Icon"
 import styled from "styled-components"
 import { NavLink } from "react-router-dom"
+import { theme } from "@/common/ts/variable"
 
 const NavWrapper = styled.nav`
   background-color: #fff;
@@ -11,8 +12,8 @@ const NavWrapper = styled.nav`
     li {
       flex: 1;
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
-      padding: 5px;
       a {
+        padding: 5px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -22,6 +23,7 @@ const NavWrapper = styled.nav`
           margin-bottom: 5px;
         }
         &.selected {
+          background-color: ${theme.backgroundColor};
           color: rgba(0, 0, 0, 1);
           font-weight: 600;
         }
@@ -41,7 +43,7 @@ function Nav() {
         </li>
         <li>
           <NavLink to="/money" activeClassName="selected">
-            <Icon name="money"></Icon>记一笔
+            <Icon name="money"></Icon>记账
           </NavLink>
         </li>
         <li>
