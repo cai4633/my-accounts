@@ -20,7 +20,8 @@ const generateAllTags = () => [
   { id: createTagId(), name: "烟酒", category: "-", icon: "wine" },
 ]
 function useTag() {
-  const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(generateAllTags().slice(0,6)))
+  const allTags = generateAllTags()
+  const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(allTags.slice(0, 6)))
   const [tags, setTags] = useState<MyTypes.TagItem[]>(defaultTags)
   useEffect(() => {
     localStorage.setItem(__TAGS__, JSON.stringify(tags))
@@ -65,6 +66,6 @@ function useTag() {
     }
   }
 
-  return { tags, setTags, updateTag, findTag, deleteTag, addTag }
+  return { tags, setTags, updateTag, findTag, deleteTag, addTag, allTags }
 }
 export { useTag }
