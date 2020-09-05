@@ -2,7 +2,6 @@ import React from "react"
 import { TagWrapper } from "./TagWrapper"
 import { useTag } from "@/common/ts/useTag"
 
-
 const TagSection: React.FC<MyTypes.Prop> = (prop) => {
   const { tags, addTag } = useTag()
   const selectedTags = prop.selected
@@ -38,12 +37,7 @@ const TagSection: React.FC<MyTypes.Prop> = (prop) => {
           )
         })}
       </div>
-      <button
-        onClick={() => {
-          addTag()
-        }}>
-        新增标签
-      </button>
+      <button onClick={() => {}}>新增标签</button>
     </TagWrapper>
   )
 }

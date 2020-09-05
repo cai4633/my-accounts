@@ -5,7 +5,9 @@ import { useHistory } from "react-router-dom"
 import { theme } from "@/common/ts/variable"
 import "common/less/mixin.less"
 
-interface Props {}
+interface Props {
+  onOk?: () => void
+}
 
 const Header = styled.header`
   text-align: center;
@@ -23,6 +25,7 @@ const Header = styled.header`
   }
 `
 const MHeader: React.FC<Props> = (props) => {
+  const { onOk } = props
   const history = useHistory()
   const goback = () => {
     history.goBack()
@@ -32,10 +35,21 @@ const MHeader: React.FC<Props> = (props) => {
       <h1>
         <Icon name="left" onClick={goback} className="extend-click"></Icon>
         <span className="title">{props.children}</span>
-        <span className="btn extend-click">完成</span>
+        <span
+          className="btn extend-click"
+          onClick={() => {
+            onOk!()
+          }}>
+          完成
+        </span>
       </h1>
     </Header>
   )
 }
 
+MHeader.defaultProps = {
+  onOk: () => {
+    console.log("ok")
+  },
+}
 export default MHeader

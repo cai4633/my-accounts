@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
-import { createTagId } from "./util"
+import { createTagId, getComplementarySet, getIds } from "./util"
 
 const __TAGS__ = "tags"
-const allTags = [
+const allTags: MyTypes.TagItem[] = [
   { id: createTagId(), name: "服饰", category: "-", icon: "clothes" },
   { id: createTagId(), name: "餐饮", category: "-", icon: "food" },
   { id: createTagId(), name: "住房", category: "-", icon: "house" },
@@ -22,12 +22,21 @@ const allTags = [
 function useTag() {
   const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(allTags.slice(0, 6)))
   const [tags, setTags] = useState<MyTypes.TagItem[]>(defaultTags)
+  const [restTags, setRestTags] = useState<MyTypes.TagItem[]>([])
+  const [checktags, setChecktags] = useState<number[]>([])
   useEffect(() => {
+    const rest = getComplementarySet<number>(getIds(tags), getIds(allTags))
     localStorage.setItem(__TAGS__, JSON.stringify(tags))
+    setRestTags(findTags(rest))
   }, [tags])
 
-  const findTag = (id: number) => {
+  // 获取标签id
+  const findTagId = (id: number) => {
     return tags.findIndex((item) => item.id === id)
+  }
+  // 根据id 获取标签
+  const findTags = (ids: number[]): MyTypes.TagItem[] => {
+    return ids.map((id) => allTags.filter((tag) => tag.id === id)[0])
   }
 
   // 更新标签
@@ -42,7 +51,7 @@ function useTag() {
   // 删除标签
   const deleteTag = (id: number) => {
     const tagsCopy = tags.slice()
-    const tagid = findTag(id)
+    const tagid = findTagId(id)
     if (tagid === -1) {
       return
     }
@@ -51,20 +60,10 @@ function useTag() {
   }
 
   // 添加标签
-  const addTag = () => {
-    const tagNames = tags.map((tag) => tag.name)
-    const name = window.prompt("请输入你要添加的标签名")
-    if (!name) {
-      window.alert("你没有输入有效的标签名！")
-      return
-    } else if (tagNames.includes(name)) {
-      window.alert("标签名已经存在！")
-      return
-    } else {
-      setTags([...tags, { id: createTagId(), name, category: "+", icon: "" }])
-    }
+  const addTag = (val: number[]) => {
+    setTags([...tags, ...findTags(val)])
   }
 
-  return { tags, setTags, updateTag, findTag, deleteTag, addTag, allTags }
+  return { tags, setTags, updateTag, findTagId, deleteTag, addTag, allTags, checktags, setChecktags, restTags }
 }
 export { useTag }

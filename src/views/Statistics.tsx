@@ -49,7 +49,7 @@ const Statistics: React.FC = () => {
   const [category, setCategory] = useState<MyTypes.Categories>("+")
   const getRecords = recordsOrderByDate(Record.get())
   const [records, setRecords] = useState<[string, MyTypes.RecordItem[]][]>(getRecords("+"))
-  const { findTag, tags } = useTag()
+  const { findTagId, tags } = useTag()
 
   // useEffect(() => {
   //   // 基于准备好的dom，初始化echarts实例
@@ -124,7 +124,7 @@ const Statistics: React.FC = () => {
                         {item.selected.map((id) => {
                           return (
                             <span className="tag" key={id}>
-                              {tags[findTag(id)].name}
+                              {tags[findTagId(id)].name}
                             </span>
                           )
                         })}
