@@ -29,7 +29,7 @@ const map = { "+": "收入", "-": "支出" }
 type KeyType = keyof typeof map
 type Prop = { category: KeyType; onchange: (category: KeyType) => void }
 const CategorySection: React.FC<Prop> = (prop) => {
-  const categorys: KeyType[] = ["+", "-"]
+  const categorys: KeyType[] = ["-", "+"]
   const index = prop.category
   const setIndex = prop.onchange
 

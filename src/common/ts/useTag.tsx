@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react"
 import { createTagId, getComplementarySet, getIds } from "./util"
 
+interface Classify<T = MyTypes.TagItem> {
+  income: T[]
+  outcome: T[]
+}
+
 const __TAGS__ = "tags"
 const allTags: MyTypes.TagItem[] = [
   { id: createTagId(), name: "服饰", category: "-", icon: "clothes" },
@@ -18,17 +23,40 @@ const allTags: MyTypes.TagItem[] = [
   { id: createTagId(), name: "数码", category: "-", icon: "digital" },
   { id: createTagId(), name: "通讯", category: "-", icon: "message" },
   { id: createTagId(), name: "烟酒", category: "-", icon: "wine" },
+  { id: createTagId(), name: "工资", category: "+", icon: "salary" },
+  { id: createTagId(), name: "兼职", category: "+", icon: "ptjob" },
+  { id: createTagId(), name: "理财", category: "+", icon: "financing" },
+  { id: createTagId(), name: "礼金", category: "+", icon: "gift" },
+  { id: createTagId(), name: "其它", category: "-", icon: "other" },
+  { id: createTagId(), name: "其它", category: "+", icon: "other" },
 ]
 function useTag() {
-  const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(allTags.slice(0, 6)))
+  const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(allTags.slice(0)))
   const [tags, setTags] = useState<MyTypes.TagItem[]>(defaultTags)
+
+  const [classify, setClassify] = useState<Classify>({ income: [], outcome: [] })
   const [restTags, setRestTags] = useState<MyTypes.TagItem[]>([])
   const [checktags, setChecktags] = useState<number[]>([])
   useEffect(() => {
     const rest = getComplementarySet<number>(getIds(tags), getIds(allTags))
+    setClassify(classifyByCategory(tags))
     localStorage.setItem(__TAGS__, JSON.stringify(tags))
     setRestTags(findTags(rest))
   }, [tags])
+
+  // 根据category将将标签分类
+  function classifyByCategory<T extends { category: MyTypes.Categories }>(tags: T[]) {
+    const income: T[] = []
+    const outcome: T[] = []
+    tags.forEach((tag) => {
+      if (tag.category === "+") {
+        income.push(tag)
+      } else {
+        outcome.push(tag)
+      }
+    })
+    return { income, outcome }
+  }
 
   // 获取标签id
   const findTagId = (id: number) => {
@@ -64,6 +92,6 @@ function useTag() {
     setTags([...tags, ...findTags(val)])
   }
 
-  return { tags, setTags, updateTag, findTagId, deleteTag, addTag, allTags, checktags, setChecktags, restTags }
+  return { tags, setTags, updateTag, findTagId, deleteTag, addTag, allTags, checktags, setChecktags, restTags, classify }
 }
 export { useTag }
