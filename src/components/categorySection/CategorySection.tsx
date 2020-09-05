@@ -1,9 +1,10 @@
 import React from "react"
 import styled from "styled-components"
+import { theme } from "common/ts/variable"
 
 const CategoryWrapper = styled.section`
   display: flex;
-  background-color: #c4c4c4;
+  background-color: ${theme.backgroundColor};
   font-size: 16px;
   button {
     min-width: 0;
@@ -31,7 +32,7 @@ const CategorySection: React.FC<Prop> = (prop) => {
   const categorys: KeyType[] = ["+", "-"]
   const index = prop.category
   const setIndex = prop.onchange
-  
+
   const clickFn = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
     let val = (e.target as HTMLElement).id as KeyType

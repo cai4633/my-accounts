@@ -55,9 +55,6 @@ const Tag: React.FC<Prop> = (prop) => {
     },
   }
   const tagName = tagid >= 0 ? tags[tagid].name : ""
-  const goback = () => {
-    history.goBack()
-  }
   const Note = (
     <NoteSection
       note={tagName}

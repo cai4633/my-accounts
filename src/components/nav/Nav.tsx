@@ -8,7 +8,7 @@ const NavWrapper = styled.nav`
   background-color: #fff;
   ul {
     display: flex;
-    vertical-align: top;
+    margin-bottom: 0;
     li {
       flex: 1;
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);

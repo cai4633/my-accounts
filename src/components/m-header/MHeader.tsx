@@ -2,23 +2,24 @@ import React, { ReactChild } from "react"
 import styled from "styled-components"
 import Icon from "../icon/Icon"
 import { useHistory } from "react-router-dom"
+import { theme } from "@/common/ts/variable"
+import "common/less/mixin.less"
 
 interface Props {}
 
 const Header = styled.header`
   text-align: center;
-  position: relative;
-  background-color: #fff;
-  svg {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+  background-color: ${theme.backgroundColor};
   h1 {
-    line-height: 3em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 16px;
     font-weight: normal;
+    padding: 0 20px;
+    .title {
+      line-height: 3em;
+    }
   }
 `
 const MHeader: React.FC<Props> = (props) => {
@@ -28,8 +29,11 @@ const MHeader: React.FC<Props> = (props) => {
   }
   return (
     <Header>
-      <Icon name="left" onClick={goback}></Icon>
-      <h1>{props.children}</h1>
+      <h1>
+        <Icon name="left" onClick={goback} className="extend-click"></Icon>
+        <span className="title">{props.children}</span>
+        <span className="btn extend-click">完成</span>
+      </h1>
     </Header>
   )
 }

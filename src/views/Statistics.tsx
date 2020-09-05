@@ -1,9 +1,10 @@
 import { Record } from "@/common/ts/cache"
 import Layout from "components/layout/Layout"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import CategorySection from "./edit/CategorySection"
+import CategorySection from "components/categorySection/CategorySection"
 import { useTag } from "@/common/ts/useTag"
+import echarts from "echarts"
 
 const LayoutWrapper = styled.div`
   .category-wrapper {
@@ -44,11 +45,40 @@ const LayoutWrapper = styled.div`
   }
 `
 
-const Statistics = () => {
+const Statistics: React.FC = () => {
   const [category, setCategory] = useState<MyTypes.Categories>("+")
   const getRecords = recordsOrderByDate(Record.get())
   const [records, setRecords] = useState<[string, MyTypes.RecordItem[]][]>(getRecords("+"))
   const { findTag, tags } = useTag()
+
+  // useEffect(() => {
+  //   // 基于准备好的dom，初始化echarts实例
+  //   const node = document.getElementById("main") as HTMLDivElement
+  //   if (node) {
+  //     var myChart = echarts.init(node)
+  //     // 绘制图表
+  //     myChart.setOption({
+  //       title: {
+  //         text: "ECharts 入门示例",
+  //       },
+  //       tooltip: {},
+  //       xAxis: {
+  //         data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
+  //       },
+  //       yAxis: {
+  //         type: "category",
+  //       },
+  //       series: [
+  //         {
+  //           name: "销量",
+  //           type: "line",
+  //           data: [0, 0, 0, 0, 0],
+  //         },
+  //       ],
+  //     })
+  //   }
+  // })
+
   const changeFunc = (obj: { category: MyTypes.Categories }) => {
     setCategory(obj.category)
     setRecords(getRecords(obj.category))
@@ -81,6 +111,7 @@ const Statistics = () => {
         <div className="category-wrapper">
           <CategorySection category={category} onchange={(category) => changeFunc({ category })}></CategorySection>
         </div>
+        {/* <div id="main" style={{ width: "400px", height: "400px" }}></div> */}
         <div className="content-wrapper">
           {records.map((record, index) => {
             return (

@@ -6,7 +6,7 @@ import Money from "@/views/Money"
 import Statistics from "views/Statistics"
 import NoMatch from "views/NoMatch"
 import EditTag from "views/editTag/EditTag"
-import AddTags from "./views/addTags/AddTags"
+import AddTags from "views/addTags/AddTags"
 function App() {
   return (
     <Router>

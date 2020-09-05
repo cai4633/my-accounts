@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { createTagId } from "./util"
 
 const __TAGS__ = "tags"
-const generateAllTags = () => [
+const allTags = [
   { id: createTagId(), name: "服饰", category: "-", icon: "clothes" },
   { id: createTagId(), name: "餐饮", category: "-", icon: "food" },
   { id: createTagId(), name: "住房", category: "-", icon: "house" },
@@ -20,7 +20,6 @@ const generateAllTags = () => [
   { id: createTagId(), name: "烟酒", category: "-", icon: "wine" },
 ]
 function useTag() {
-  const allTags = generateAllTags()
   const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(allTags.slice(0, 6)))
   const [tags, setTags] = useState<MyTypes.TagItem[]>(defaultTags)
   useEffect(() => {
