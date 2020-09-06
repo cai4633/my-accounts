@@ -42,7 +42,7 @@ const NumberPadSection: React.FC<Prop> = (prop) => {
         />
       </div>
       <div className="pad">
-        <div className="button-wrapper" onClick={clickFunc}>
+        <div className="button-wrapper clearfix" onClick={clickFunc}>
           <button className="white-1">1</button>
           <button className="white-2">2</button>
           <button className="white-3">3</button>

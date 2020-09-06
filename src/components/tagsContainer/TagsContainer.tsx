@@ -8,8 +8,11 @@ import classnames from "classnames"
 interface Props {
   tags: any[]
   checkTags?: number[]
+  selected?: number[]
   addBtn?: boolean
+  parent?: string
   onchange?: (val: number) => void
+  togglePad?: (selected: number[]) => void
 }
 
 const TagsWrapper = styled.div`
@@ -45,29 +48,54 @@ const TagsWrapper = styled.div`
           border: 1px solid red;
         }
       }
+      .selected {
+        svg.icon {
+          background-color: ${theme.backgroundColor};
+        }
+      }
     }
   }
 `
 
 const TagsContainer: React.FC<Props> = (props) => {
-  const { tags, addBtn, checkTags, onchange } = props
+  const { tags, addBtn, checkTags, onchange, parent, togglePad, selected } = props
   const getClass = (id: number) => {
-    return checkTags && checkTags.includes(id) ? "checked" : ""
+    if (checkTags) {
+      return checkTags.includes(id) ? "checked" : ""
+    }
+    if (selected) {
+      return selected.includes(id) ? "selected" : ""
+    }
+    return ""
   }
   const toggleTag = (tagid: number) => {
     if (onchange) {
       onchange(tagid)
+    } else if (togglePad) {
+      togglePad([tagid])
     }
   }
-
+  const Item = (tag: MyTypes.TagItem) => {
+    return (
+      <React.Fragment>
+        <Icon name={tag.icon}></Icon>
+        <span className="name">{tag.name}</span>
+      </React.Fragment>
+    )
+  }
   //路由部分
   const navLink = (tag: MyTypes.TagItem) => {
     return (
-      <li key={tag.id}>
-        <NavLink to={"/tags/" + tag.id}>
-          <Icon name={tag.icon}></Icon>
-          <span className="name">{tag.name}</span>
-        </NavLink>
+      <li
+        key={tag.id}
+        onClick={() => {
+          toggleTag(tag.id)
+        }}>
+        {parent !== "money" ? (
+          <NavLink to={"/tags/" + tag.id}>{Item(tag)}</NavLink>
+        ) : (
+          <div className={classnames("item", getClass(tag.id))}>{Item(tag)}</div>
+        )}
       </li>
     )
   }
@@ -80,10 +108,7 @@ const TagsContainer: React.FC<Props> = (props) => {
         onClick={() => {
           toggleTag(tag.id)
         }}>
-        <div className={classnames("item", getClass(tag.id))}>
-          <Icon name={tag.icon}></Icon>
-          <span className="name">{tag.name}</span>
-        </div>
+        <div className={classnames("item", getClass(tag.id))}>{Item(tag)}</div>
       </li>
     )
   }

@@ -1,19 +1,19 @@
 import styled from "styled-components"
 
 const NumberPadWrapper = styled.section`
-  display: flex;
   background-color: #fff;
-  flex-direction: column;
   flex: 1;
-  min-height: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 180px;
   .output {
     width: 100%;
     input {
-      font-size: 36px;
+      font-size: 26px;
       text-align: right;
       width: 100%;
       box-sizing: border-box;
-      line-height: 2em;
+      line-height: 1.5em;
       padding: 0px 10px;
       box-shadow: inset 0px -5px 5px -5px rgba(0, 0, 0, 0.25), inset 0px 5px 5px -5px rgba(0, 0, 0, 0.25);
       -moz-user-select: none;
@@ -23,11 +23,13 @@ const NumberPadWrapper = styled.section`
     }
   }
   .pad {
-    min-height: 50px;
+    width: 100%;
     flex-grow: 1;
+    min-height: 100px;
+    display: flex;
     box-sizing: border-box;
     .button-wrapper {
-      height: 100%;
+      width: 100%;
       button {
         box-sizing: border-box;
         background-color: #eee;

@@ -12,7 +12,8 @@ const Wrapper = styled.div`
     text-align: left;
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - 46px)
+    max-height: calc(100vh - 48px);
+    overflow: auto;
   }
 `
 

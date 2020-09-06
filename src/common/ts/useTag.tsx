@@ -21,6 +21,11 @@ const allTags: MyTypes.TagItem[] = [
   { id: createTagId(), name: "孩子", category: "-", icon: "children" },
   { id: createTagId(), name: "社交", category: "-", icon: "communication" },
   { id: createTagId(), name: "数码", category: "-", icon: "digital" },
+  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
+  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
+  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
+  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
+  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
   { id: createTagId(), name: "通讯", category: "-", icon: "message" },
   { id: createTagId(), name: "烟酒", category: "-", icon: "wine" },
   { id: createTagId(), name: "工资", category: "+", icon: "salary" },
@@ -33,10 +38,10 @@ const allTags: MyTypes.TagItem[] = [
 function useTag() {
   const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(allTags.slice(0)))
   const [tags, setTags] = useState<MyTypes.TagItem[]>(defaultTags)
-
-  const [classify, setClassify] = useState<Classify>({ income: [], outcome: [] })
   const [restTags, setRestTags] = useState<MyTypes.TagItem[]>([])
+  const [classify, setClassify] = useState<Classify>({ income: [], outcome: [] })
   const [checktags, setChecktags] = useState<number[]>([])
+
   useEffect(() => {
     const rest = getComplementarySet<number>(getIds(tags), getIds(allTags))
     setClassify(classifyByCategory(tags))

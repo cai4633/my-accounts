@@ -15,6 +15,9 @@ const LayoutWrapper = styled.div`
     .category-wrapper {
       border: 1px solid transparent;
     }
+    .tags-wrapper {
+      overflow: auto;
+    }
   }
 `
 
@@ -31,7 +34,9 @@ const Tags = () => {
         <div className="category-wrapper">
           <CategorySection category={category} onchange={onchange}></CategorySection>
         </div>
-        <TagsContainer tags={classify[map[category]]}> </TagsContainer>
+        <div className="tags-wrapper">
+          <TagsContainer tags={classify[map[category]]}> </TagsContainer>
+        </div>
       </Layout>
     </LayoutWrapper>
   )
