@@ -6,12 +6,14 @@ const CategoryWrapper = styled.section`
   display: flex;
   background-color: ${theme.backgroundColor};
   font-size: 16px;
+  justify-content: center;
   button {
-    min-width: 0;
+    max-width: 20%;
     line-height: 3em;
     flex: 1;
     position: relative;
     text-align: center;
+    margin: 0 10px;
     &.selected::after {
       content: "";
       display: block;
@@ -31,23 +33,18 @@ type Prop = { category: KeyType; onchange: (category: KeyType) => void }
 const CategorySection: React.FC<Prop> = (prop) => {
   const categorys: KeyType[] = ["-", "+"]
   const index = prop.category
-  const setIndex = prop.onchange
-
-  const clickFn = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation()
-    let val = (e.target as HTMLElement).id as KeyType
-    setIndex(val)
-  }
-
   return (
-    <CategoryWrapper onClick={clickFn}>
-      {categorys.map((cg) => {
-        return (
-          <button key={cg} className={index === cg ? "selected" : ""} id={cg}>
-            {map[cg]}
-          </button>
-        )
-      })}
+    <CategoryWrapper>
+      {categorys.map((cg) => (
+        <button
+          key={cg}
+          className={index === cg ? "selected" : ""}
+          onClick={() => {
+            prop.onchange(cg)
+          }}>
+          {map[cg]}
+        </button>
+      ))}
     </CategoryWrapper>
   )
 }

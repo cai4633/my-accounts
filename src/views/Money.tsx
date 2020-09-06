@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react"
-import Layout from "components/layout/Layout"
-import TagSection from "./edit/tagWrapper/TagSection"
 import NoteSection from "./edit/NoteSection"
 import CategorySection from "components/categorySection/CategorySection"
 import NumberPadSection from "./edit/numberPadSection/NumberPadSection"

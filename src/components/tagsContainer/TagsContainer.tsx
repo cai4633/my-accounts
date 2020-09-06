@@ -117,7 +117,7 @@ const TagsContainer: React.FC<Props> = (props) => {
     <div>
       <TagsWrapper>
         <ol>
-          {tags.map((tag: MyTypes.TagItem) => {
+          { tags && tags.map((tag: MyTypes.TagItem) => {
             return addBtn ? navLink(tag) : add(tag)
           })}
 
