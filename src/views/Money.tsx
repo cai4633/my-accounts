@@ -4,7 +4,7 @@ import CategorySection from "components/categorySection/CategorySection"
 import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
 import { Record } from "@/common/ts/cache"
 import dayjs from "dayjs"
-import { useTag } from "@/common/ts/useTag"
+import { useTag } from "@/hooks/useTag"
 import TagsContainer from "@/components/tagsContainer/TagsContainer"
 import styled from "styled-components"
 

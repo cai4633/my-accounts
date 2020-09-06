@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { NavLink } from "react-router-dom"
 import Icon from "../icon/Icon"
 import styled from "styled-components"
-import { theme } from "@/common/ts/variable"
+import { theme } from "@/common/ts/variable.ts"
 import classnames from "classnames"
 
 interface Props {

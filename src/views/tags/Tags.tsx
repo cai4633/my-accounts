@@ -1,9 +1,9 @@
-import React, { useState } from "react"
-import Layout from "components/layout/Layout"
-import { useTag } from "common/ts/useTag"
-import styled from "styled-components"
-import TagsContainer from "@/components/tagsContainer/TagsContainer"
 import CategorySection from "@/components/categorySection/CategorySection"
+import TagsContainer from "@/components/tagsContainer/TagsContainer"
+import Layout from "components/layout/Layout"
+import React, { useState } from "react"
+import styled from "styled-components"
+import { useTag } from "@/hooks/useTag"
 
 interface MapType {
   [key: string]: "income" | "outcome"

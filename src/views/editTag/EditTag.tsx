@@ -1,6 +1,6 @@
 import React from "react"
 import { useParams, useHistory } from "react-router-dom"
-import { useTag } from "@/common/ts/useTag"
+import { useTag } from "@/hooks/useTag"
 import styled from "styled-components"
 import NoteSection from "views/edit/NoteSection"
 import Layout from "@/components/layout/Layout"

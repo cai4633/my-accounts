@@ -37,8 +37,8 @@ function Nav() {
     <NavWrapper>
       <ul>
         <li>
-          <NavLink to="/tags" activeClassName="selected">
-            <Icon name="tag"></Icon>标签
+          <NavLink to="/detail" activeClassName="selected">
+            <Icon name="statistics"></Icon>明细
           </NavLink>
         </li>
         <li>
@@ -47,8 +47,8 @@ function Nav() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/statistics" activeClassName="selected">
-            <Icon name="statistics"></Icon>统计
+          <NavLink to="/tags" activeClassName="selected">
+            <Icon name="tag"></Icon>标签
           </NavLink>
         </li>
       </ul>

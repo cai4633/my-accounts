@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { createTagId, getComplementarySet, getIds } from "./util"
+import { createTagId, getComplementarySet, getIds } from "../common/ts/util"
 
 interface Classify<T = MyTypes.TagItem> {
   income: T[]

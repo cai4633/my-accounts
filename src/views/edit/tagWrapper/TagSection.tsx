@@ -1,6 +1,6 @@
 import React from "react"
 import { TagWrapper } from "./TagWrapper"
-import { useTag } from "@/common/ts/useTag"
+import { useTag } from "@/hooks/useTag"
 
 const TagSection: React.FC<MyTypes.Prop> = (prop) => {
   const { tags, addTag } = useTag()
