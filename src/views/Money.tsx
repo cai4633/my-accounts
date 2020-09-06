@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import NoteSection from "./edit/NoteSection"
 import CategorySection from "components/categorySection/CategorySection"
 import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
@@ -40,16 +40,18 @@ const Money: React.FC = () => {
   const initialState: MyTypes.MoneyState = { selected: [], note: "", category: "+", output: "0" }
   const [state, setState] = useState<MyTypes.MoneyState>(initialState)
   const [showPad, setShowPad] = useState(false)
+  const categoryWrapper = useRef<HTMLDivElement>(null)
+  const tagsWrapper = useRef<HTMLDivElement>(null)
+  const bottom = useRef<HTMLDivElement>(null)
   const changeFunc = (obj: Partial<MyTypes.MoneyState>) => {
     setState({ ...state, ...obj })
   }
   const submit = () => {
     Record.set([...Record.get(), { ...state, createAt: dayjs().format("YYYY-MM-DD") }])
-    setState(Object.assign({}, initialState))   //reset
+    setState(Object.assign({}, initialState)) //reset
   }
-
   const map: MapType = { "+": "income", "-": "outcome" }
-  const { tags, addTag, classify } = useTag()
+  const { tags, classify } = useTag()
   const selectTag = (selected: number[]) => {
     changeFunc({ selected })
   }
@@ -58,18 +60,25 @@ const Money: React.FC = () => {
     setShowPad(!!state.selected.length)
   }, [state.selected])
 
+  useEffect(() => {
+    // 输入框弹出时，让标签高度自适应
+    if (categoryWrapper.current && tagsWrapper.current && bottom.current) {
+      const height = document.documentElement.clientHeight - categoryWrapper.current.offsetHeight - bottom.current.offsetHeight
+      tagsWrapper.current.style.height = `${height}px`
+    }
+  }, [showPad])
   return (
     <LayoutWrapper>
       <main>
-        <div className="category-wrapper">
+        <div className="category-wrapper" ref={categoryWrapper}>
           <CategorySection category={state.category} onchange={(category) => changeFunc({ category })}></CategorySection>
         </div>
-        <div className="tags-wrapper">
+        <div className="tags-wrapper" ref={tagsWrapper}>
           <TagsContainer tags={classify[map[state.category]]} parent="money" togglePad={selectTag} selected={state.selected}></TagsContainer>
         </div>
       </main>
       {showPad && (
-        <section className="bottom">
+        <section className="bottom" ref={bottom}>
           <NoteSection note={state.note} onchange={(note) => changeFunc({ note })}></NoteSection>
           <NumberPadSection output={state.output} onchange={(output) => changeFunc({ output })} onOk={submit}></NumberPadSection>
         </section>

@@ -1,12 +1,14 @@
 import React from "react"
 import styled from "styled-components"
 import { theme } from "common/ts/variable"
+import { useHistory } from "react-router-dom"
 
 const CategoryWrapper = styled.section`
   display: flex;
   background-color: ${theme.backgroundColor};
   font-size: 16px;
   justify-content: center;
+  align-items: center;
   button {
     max-width: 20%;
     line-height: 3em;
@@ -25,6 +27,11 @@ const CategoryWrapper = styled.section`
       bottom: 0px;
     }
   }
+  .cancel {
+    position: absolute;
+    right: 20px;
+    font-size: 12px;
+  }
 `
 
 const map = { "+": "收入", "-": "支出" }
@@ -33,6 +40,7 @@ type Prop = { category: KeyType; onchange: (category: KeyType) => void }
 const CategorySection: React.FC<Prop> = (prop) => {
   const categorys: KeyType[] = ["-", "+"]
   const index = prop.category
+  const history = useHistory()
   return (
     <CategoryWrapper>
       {categorys.map((cg) => (
@@ -45,6 +53,13 @@ const CategorySection: React.FC<Prop> = (prop) => {
           {map[cg]}
         </button>
       ))}
+      <span
+        className="cancel extend-click"
+        onClick={() => {
+          history.push("/")
+        }}>
+        取消
+      </span>
     </CategoryWrapper>
   )
 }
