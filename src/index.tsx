@@ -4,6 +4,7 @@ import "common/less/index.less"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
 // import "antd/dist/antd.css"
+import 'antd-mobile/dist/antd-mobile.css'; 
 import { createFromIconfontCN }  from '@ant-design/icons'
 
 export const IconFont = createFromIconfontCN({

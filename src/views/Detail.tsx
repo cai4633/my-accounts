@@ -2,18 +2,58 @@ import { Record } from "@/common/ts/cache.ts"
 import Layout from "components/layout/Layout"
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import CategorySection from "components/categorySection/CategorySection"
 import { useTag } from "@/hooks/useTag"
 import echarts from "echarts"
 import dayjs from "dayjs"
 import { theme } from "@/common/ts/variable"
 import { recordsOrderByDate, settleAccountsByDay } from "@/common/ts/detail"
-
+import { DatePickerView } from "antd-mobile"
 const LayoutWrapper = styled.div`
   .category-wrapper {
+    text-align: center;
+    background-color: ${theme.backgroundColor};
     button {
       font-size: 24px;
       line-height: 2em;
+    }
+    h1 {
+      font-size: 20px;
+    }
+    .content {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      .content-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .date {
+        flex: 1.5;
+        position: relative;
+        &::after {
+          position: absolute;
+          content: "";
+          right: 0;
+          display: block;
+          width: 2px;
+          height: calc(100% - 10px);
+          background-color: #000;
+        }
+      }
+      .income,
+      .outcome {
+        flex: 2;
+      }
+    }
+    .datePickerWrapper {
+      background: #fff;
+      position: fixed;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
     }
   }
 
@@ -56,16 +96,13 @@ const LayoutWrapper = styled.div`
 
 const Detail: React.FC = () => {
   const [category, setCategory] = useState<MyTypes.Categories>("+")
-  const getRecords = () => {
-    return recordsOrderByDate(Record.get())
-  }
-  const [records, setRecords] = useState<[string, MyTypes.RecordItem[]][]>(getRecords())
+  const [date, setDate] = useState<Date>(new Date())
   const { findTagId, tags } = useTag()
-
+  const getRecords = () => recordsOrderByDate(Record.get())
+  const [records, setRecords] = useState<[string, MyTypes.RecordItem[]][]>(getRecords())
   const changeFunc = (obj: { category: MyTypes.Categories }) => {
     setCategory(obj.category)
   }
-
   const getDay = (day: string) => {
     const today = dayjs().format("YYYY-MM-DD")
     const yesterday = dayjs().subtract(1, "day").format("YYYY-MM-DD")
@@ -77,12 +114,36 @@ const Detail: React.FC = () => {
     }
     return map[day]
   }
+  const onChange = (value: Date) => {
+    console.log(dayjs(value).date())
+  }
+  const getMonth = (date: Date) => {
+    const month = date.getMonth() + 1
+    return month > 9 ? month.toString() : "0" + month
+  }
 
   return (
     <LayoutWrapper>
       <Layout className="statistics">
         <div className="category-wrapper">
-          <CategorySection category={category} onchange={(category) => changeFunc({ category })}></CategorySection>
+          <h1>天天记账</h1>
+          <div className="content">
+            <div className="date content-item">
+              <span className="year">{date.getFullYear()}年</span>
+              <span className="month">{getMonth(date)}月</span>
+            </div>
+            <div className="income content-item">
+              <span className="title">收入</span>
+              <span className="text">200.00</span>
+            </div>
+            <div className="outcome content-item">
+              <span className="title">支出</span>
+              <span className="text">200</span>
+            </div>
+          </div>
+          <div className="datePickerWrapper">
+            <DatePickerView mode="month" value={date} onChange={onChange}></DatePickerView>
+          </div>
         </div>
         <div className="content-wrapper">
           {records.map((record, index) => {
