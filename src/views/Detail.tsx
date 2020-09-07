@@ -1,13 +1,14 @@
 import { Record } from "@/common/ts/cache.ts"
-import Layout from "components/layout/Layout"
-import React, { useState, useEffect } from "react"
-import styled from "styled-components"
-import { useTag } from "@/hooks/useTag"
-import echarts from "echarts"
-import dayjs from "dayjs"
-import { theme } from "@/common/ts/variable"
 import { recordsOrderByDate, settleAccountsByDay } from "@/common/ts/detail"
+import { theme } from "@/common/ts/variable"
+import { useTag } from "@/hooks/useTag"
 import { DatePickerView } from "antd-mobile"
+import Layout from "components/layout/Layout"
+import dayjs from "dayjs"
+import React, { useState } from "react"
+import styled from "styled-components"
+import Icon from "@/components/icon/Icon"
+
 const LayoutWrapper = styled.div`
   .category-wrapper {
     text-align: center;
@@ -33,6 +34,9 @@ const LayoutWrapper = styled.div`
       .date {
         flex: 1.5;
         position: relative;
+        .month > .big {
+          font-size: 1.4em;
+        }
         &::after {
           position: absolute;
           content: "";
@@ -54,6 +58,13 @@ const LayoutWrapper = styled.div`
       bottom: 0px;
       left: 0px;
       width: 100%;
+      .shade {
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: 100vh;
+        top: 0;
+      }
     }
   }
 
@@ -97,6 +108,7 @@ const LayoutWrapper = styled.div`
 const Detail: React.FC = () => {
   const [category, setCategory] = useState<MyTypes.Categories>("+")
   const [date, setDate] = useState<Date>(new Date())
+  const [showPicker, setShowPicker] = useState(false)
   const { findTagId, tags } = useTag()
   const getRecords = () => recordsOrderByDate(Record.get())
   const [records, setRecords] = useState<[string, MyTypes.RecordItem[]][]>(getRecords())
@@ -115,7 +127,7 @@ const Detail: React.FC = () => {
     return map[day]
   }
   const onChange = (value: Date) => {
-    console.log(dayjs(value).date())
+    setDate(value)
   }
   const getMonth = (date: Date) => {
     const month = date.getMonth() + 1
@@ -128,9 +140,11 @@ const Detail: React.FC = () => {
         <div className="category-wrapper">
           <h1>天天记账</h1>
           <div className="content">
-            <div className="date content-item">
+            <div className="date content-item" onClick={() => setShowPicker(true)}>
               <span className="year">{date.getFullYear()}年</span>
-              <span className="month">{getMonth(date)}月</span>
+              <span className="month">
+                <span className="big">{getMonth(date)}</span>月<Icon name="dropdown"></Icon>
+              </span>
             </div>
             <div className="income content-item">
               <span className="title">收入</span>
@@ -141,9 +155,16 @@ const Detail: React.FC = () => {
               <span className="text">200</span>
             </div>
           </div>
-          <div className="datePickerWrapper">
-            <DatePickerView mode="month" value={date} onChange={onChange}></DatePickerView>
-          </div>
+          {showPicker && (
+            <div className="datePickerWrapper">
+              <div
+                className="shade"
+                onClick={() => {
+                  setShowPicker(false)
+                }}></div>
+              <DatePickerView mode="month" value={date} onChange={onChange}></DatePickerView>
+            </div>
+          )}
         </div>
         <div className="content-wrapper">
           {records.map((record, index) => {
