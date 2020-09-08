@@ -22,7 +22,7 @@ const LayoutWrapper = styled.div`
     overflow: auto;
 
     .category-wrapper {
-      height: 40px;
+      min-height: 40px;
     }
     .tags-wrapper {
       overflow: auto;

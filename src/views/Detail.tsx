@@ -1,5 +1,5 @@
 import { Record } from "@/common/ts/cache.ts"
-import { recordsOrderByDate, settleAccountsByDay } from "@/common/ts/detail"
+import { recordsOrderByDate, settleAccountsByDay, recordsRankByMonth } from "@/common/ts/detail"
 import { theme } from "@/common/ts/variable"
 import { useTag } from "@/hooks/useTag"
 import { DatePickerView } from "antd-mobile"
@@ -43,7 +43,7 @@ const LayoutWrapper = styled.div`
           right: 0;
           display: block;
           width: 2px;
-          height: calc(100% - 10px);
+          height: calc(100% - 16px);
           background-color: #000;
         }
       }
@@ -112,9 +112,6 @@ const Detail: React.FC = () => {
   const { findTagId, tags } = useTag()
   const getRecords = () => recordsOrderByDate(Record.get())
   const [records, setRecords] = useState<[string, MyTypes.RecordItem[]][]>(getRecords())
-  const changeFunc = (obj: { category: MyTypes.Categories }) => {
-    setCategory(obj.category)
-  }
   const getDay = (day: string) => {
     const today = dayjs().format("YYYY-MM-DD")
     const yesterday = dayjs().subtract(1, "day").format("YYYY-MM-DD")
@@ -127,6 +124,8 @@ const Detail: React.FC = () => {
     return map[day]
   }
   const onChange = (value: Date) => {
+    const records = recordsRankByMonth(getRecords(), value) //数据随时间选择器改变
+    setRecords(records)
     setDate(value)
   }
   const getMonth = (date: Date) => {
@@ -134,6 +133,9 @@ const Detail: React.FC = () => {
     return month > 9 ? month.toString() : "0" + month
   }
 
+  const pickerHide = () => {
+    setShowPicker(false)
+  }
   return (
     <LayoutWrapper>
       <Layout className="statistics">
@@ -160,14 +162,14 @@ const Detail: React.FC = () => {
               <div
                 className="shade"
                 onClick={() => {
-                  setShowPicker(false)
+                  pickerHide()
                 }}></div>
               <DatePickerView mode="month" value={date} onChange={onChange}></DatePickerView>
             </div>
           )}
         </div>
         <div className="content-wrapper">
-          {records.map((record, index) => {
+          {records.map((record) => {
             return (
               <div className="content" key={record[0]}>
                 <h2>
