@@ -43,4 +43,12 @@ declare namespace MyTypes {
     "+": T
     "-": T
   }
+  interface TotalType {
+    title: string
+    total: number
+  }
+  interface AccountType {
+    income: number
+    outcome: number
+  }
 }

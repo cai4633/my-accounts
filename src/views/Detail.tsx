@@ -1,11 +1,11 @@
 import { Record } from "@/common/ts/cache.ts"
-import { recordsOrderByDate, settleAccountsByDay, recordsRankByMonth } from "@/common/ts/detail"
+import { recordsOrderByDate, settleAccountsByDay, recordsRankByMonth, isTotal } from "@/common/ts/detail"
 import { theme } from "@/common/ts/variable"
 import { useTag } from "@/hooks/useTag"
 import { DatePickerView } from "antd-mobile"
 import Layout from "components/layout/Layout"
 import dayjs from "dayjs"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import Icon from "@/components/icon/Icon"
 
@@ -104,14 +104,21 @@ const LayoutWrapper = styled.div`
     }
   }
 `
+type Rank = [string, MyTypes.RecordItem[]]
 
+interface RecordsType {
+  rank: Rank[]
+  income: number
+  outcome: number
+}
 const Detail: React.FC = () => {
-  const [category, setCategory] = useState<MyTypes.Categories>("+")
   const [date, setDate] = useState<Date>(new Date())
   const [showPicker, setShowPicker] = useState(false)
   const { findTagId, tags } = useTag()
-  const getRecords = () => recordsOrderByDate(Record.get())
-  const [records, setRecords] = useState<[string, MyTypes.RecordItem[]][]>(getRecords())
+  const getRecords = (date: Date) => recordsRankByMonth(recordsOrderByDate(Record.get()), date)
+  const [rank, setRank] = useState<[string, MyTypes.RecordItem[]][]>([])
+  const [records, setRecords] = useState<RecordsType>(getRecords(date))
+  const [total, setTotal] = useState<Pick<RecordsType, "income" | "outcome">>({ income: 0, outcome: 0 })
   const getDay = (day: string) => {
     const today = dayjs().format("YYYY-MM-DD")
     const yesterday = dayjs().subtract(1, "day").format("YYYY-MM-DD")
@@ -124,8 +131,8 @@ const Detail: React.FC = () => {
     return map[day]
   }
   const onChange = (value: Date) => {
-    const records = recordsRankByMonth(getRecords(), value) //数据随时间选择器改变
-    setRecords(records)
+    const { rank, income, outcome } = getRecords(value) //数据随时间选择器改变
+    setRecords({ rank, income, outcome })
     setDate(value)
   }
   const getMonth = (date: Date) => {
@@ -136,6 +143,13 @@ const Detail: React.FC = () => {
   const pickerHide = () => {
     setShowPicker(false)
   }
+
+  useEffect(() => {
+    const { rank, income, outcome } = records
+    setRank(rank)
+    setTotal({ income, outcome })
+  }, [records])
+
   return (
     <LayoutWrapper>
       <Layout className="statistics">
@@ -150,11 +164,11 @@ const Detail: React.FC = () => {
             </div>
             <div className="income content-item">
               <span className="title">收入</span>
-              <span className="text">200.00</span>
+              <span className="text">{total.income}</span>
             </div>
             <div className="outcome content-item">
               <span className="title">支出</span>
-              <span className="text">200</span>
+              <span className="text">{total.outcome}</span>
             </div>
           </div>
           {showPicker && (
@@ -169,14 +183,15 @@ const Detail: React.FC = () => {
           )}
         </div>
         <div className="content-wrapper">
-          {records.map((record) => {
+          {rank.map((record: Rank) => {
+            const showData = settleAccountsByDay(record[1])
             return (
               <div className="content" key={record[0]}>
                 <h2>
                   <span className="date">{getDay(record[0])}</span>
                   <div className="total">
-                    <span className="title">{settleAccountsByDay(record[1]).title}:</span>
-                    <span className="number">{settleAccountsByDay(record[1]).total}</span>
+                    <span className="title">{isTotal(showData) && showData.title}</span>
+                    <span className="number">{isTotal(showData) && showData.total}</span>
                   </div>
                 </h2>
                 <ul className="detail">
