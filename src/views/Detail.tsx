@@ -1,6 +1,6 @@
 import { Record } from "@/common/ts/cache.ts"
 import { recordsOrderByDate, settleAccountsByDay, recordsRankByMonth, isTotal } from "@/common/ts/detail"
-import { theme } from "@/common/ts/variable"
+import { theme, mixin } from "@/common/ts/variable"
 import { useTag } from "@/hooks/useTag"
 import { DatePickerView } from "antd-mobile"
 import Layout from "components/layout/Layout"
@@ -89,15 +89,19 @@ const LayoutWrapper = styled.div`
           display: flex;
           justify-content: space-between;
           align-items: center;
-          font-size: 17px;
+          font-size: 16px;
           line-height: 22px;
           padding: 9px 0px;
+          .tag > .text {
+            margin-left: 10px;
+          }
           .note {
             flex: 1;
             margin: 0 10px;
-            color: #999;
+            color: #aaa;
             font-size: 14px;
             text-align: left;
+            ${mixin.noWrap}
           }
         }
       }
@@ -201,11 +205,12 @@ const Detail: React.FC = () => {
                         {item.selected.map((id) => {
                           return (
                             <span className="tag" key={id}>
-                              {tags[findTagId(id)].name}
+                              <Icon name={tags[findTagId(id)].icon}></Icon>
+                              <span className="text">{tags[findTagId(id)].name}</span>
                             </span>
                           )
                         })}
-                        <span className="note">{item.note}</span>
+                        <span className="note no-wrap">{item.note}s</span>
                         <span className="amount">
                           {item.category}
                           {item.output}

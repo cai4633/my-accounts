@@ -3,7 +3,13 @@ const theme = {
   iconBackground: "#f1f1f1",
   dateBackground: "#e5e5e5",
   dateColor: "#777",
-  borderColor: '#ddd'
+  borderColor: "#ddd",
+}
+const mixin = {
+  noWrap: `
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;`,
 }
 
-export { theme }
+export { theme, mixin }
