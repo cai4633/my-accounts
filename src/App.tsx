@@ -7,6 +7,7 @@ import Detail from "@/views/Detail"
 import NoMatch from "views/NoMatch"
 import EditTag from "views/editTag/EditTag"
 import AddTags from "views/addTags/AddTags"
+import Statistics from 'views/Statistics'
 function App() {
   return (
     <Router>
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/addTags" component={AddTags} />
         <Route exact path="/money" component={Money} />
         <Route exact path="/detail" component={Detail} />
+        <Route exact path="/statistics" component={Statistics} />
         <Redirect exact from="/" to="/detail"></Redirect>
         <Route path="*" component={NoMatch} />
       </Switch>

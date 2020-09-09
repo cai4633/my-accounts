@@ -37,7 +37,7 @@ const LayoutWrapper = styled.div`
 `
 
 const Money: React.FC = () => {
-  const initialState: MyTypes.MoneyState = { selected: [], note: "", category: "+", output: "0" }
+  const initialState: MyTypes.MoneyState = { selected: [], note: "", category: "-", output: "0" }
   const [state, setState] = useState<MyTypes.MoneyState>(initialState)
   const [showPad, setShowPad] = useState(false)
   const categoryWrapper = useRef<HTMLDivElement>(null)

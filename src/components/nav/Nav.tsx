@@ -51,6 +51,11 @@ function Nav() {
             <Icon name="tag"></Icon>标签
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/statistics" activeClassName="selected">
+            <Icon name="statistics"></Icon>图表
+          </NavLink>
+        </li>
       </ul>
     </NavWrapper>
   )
