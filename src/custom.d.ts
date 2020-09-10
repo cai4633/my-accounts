@@ -52,3 +52,7 @@ declare namespace MyTypes {
     outcome: number
   }
 }
+
+
+//  declare type CascaderOneValue = string | number;
+//  declare type CascaderValue = CascaderOneValue[];
