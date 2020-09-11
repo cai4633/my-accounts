@@ -1,13 +1,13 @@
 import { Record } from "@/common/ts/cache"
-import Layout from "components/layout/Layout"
-import React, { useState, useEffect } from "react"
-import styled from "styled-components"
-import echarts from "echarts"
-import dayjs from "dayjs"
+import { getDataThisMonth, getDataThisWeek, getDataThisYear, recordsRankByMonth } from "@/common/ts/detail"
 import { theme } from "@/common/ts/variable"
-import { useTag } from "@/hooks/useTag"
 import Picker from "@/components/picker/Picker"
 import Tabs from "@/components/tabs/Tabs"
+import { useTag } from "@/hooks/useTag"
+import Layout from "components/layout/Layout"
+import echarts from "echarts"
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
 
 const LayoutWrapper = styled.div`
   .header {
@@ -28,18 +28,18 @@ const LayoutWrapper = styled.div`
 `
 const Detail: React.FC = () => {
   const set = ["本周", "本月", "今年"] as const
-  const [category, setCategory] = useState<MyTypes.Categories>("+")
   const [index, setIndex] = useState(0)
   const [title, setTitle] = useState("周")
-  const getRecords = recordsOrderByDate(Record.get())
-  const [records, setRecords] = useState<[string, MyTypes.RecordItem[]][]>(getRecords("+"))
-  const { findTagId, tags } = useTag()
+  const [source, setSource] = useState<myTypes.WeekItem[]>(getDataThisWeek(Record.get()))
+  const [node, setNode] = useState<HTMLDivElement>()
+  const [chart, setChart] = useState<echarts.ECharts>()
 
+  // 第一次mounted
   useEffect(() => {
-    // 基于准备好的dom，初始化echarts实例
-    const node = document.getElementById("main") as HTMLDivElement
+    setNode(document.getElementById("main") as HTMLDivElement)
     if (node) {
-      var myChart = echarts.init(node)
+      const myChart = echarts.init(node)
+      setChart(myChart)
       // 绘制图表
       myChart.setOption({
         tooltip: {
@@ -49,71 +49,59 @@ const Detail: React.FC = () => {
         yAxis: {
           type: "value",
         },
+        grid: {
+          left: 2,
+          containLabel: true,
+        },
         xAxis: { type: "category" },
         dataset: {
-          source: [
-            ["周一", 0],
-            ["周2", 10],
-            ["周3", 30],
-            ["周4", 50],
-            ["周5", 80],
-            ["周6", 90],
-            ["周7", 10],
-          ],
+          source,
         },
         series: [
           {
             name: "支出",
             type: "line",
-            encode: { x: 0, y: 1 },
+            dimensions: ["date", "income", "outcome"],
+            encode: {
+              x: 0,
+              y: 1,
+            },
           },
         ],
       })
     }
-  })
-
-  const changeFunc = (obj: { category: MyTypes.Categories }) => {
-    setCategory(obj.category)
-    setRecords(getRecords(obj.category))
-  }
-
-  function recordsOrderByDate(records: MyTypes.RecordItem[]) {
-    const orders: MyTypes.RecordOrders = { "+": {}, "-": {} }
-    records.forEach((item) => {
-      if (!item.createAt) {
-        return
-      }
-      if (!(item.createAt in orders[item.category])) {
-        orders[item.category][item.createAt] = []
-      }
-      orders[item.category][item.createAt].push(item)
-    })
-    return (category: MyTypes.Categories) =>
-      Object.entries(orders[category]).sort((a, b) => {
-        if (a[0] < b[0]) {
-          return 1
-        }
-        if (a[0] > b[0]) {
-          return -1
-        }
-        return 0
-      })
-  }
-  const getDay = (day: string) => {
-    const today = dayjs().format("YYYY-MM-DD")
-    const yesterday = dayjs().subtract(1, "day").format("YYYY-MM-DD")
-    //利用object/hash的key值唯一
-    const map = {
-      [day]: day,
-      [today]: "今天",
-      [yesterday]: "昨天",
-    }
-    return map[day]
-  }
+  }, [node])
+  useEffect(() => {
+    chart?.setOption(
+      {
+        dataset: {
+          source,
+        },
+      },
+      false,
+      true
+    )
+  }, [source])
 
   const onChange = (e: any) => {
-    setIndex(e.nativeEvent.selectedSegmentIndex)
-    setTitle(e.nativeEvent.value)
+    const selectIndex = e.nativeEvent.selectedSegmentIndex
+    const selectValue = e.nativeEvent.value
+    switch (selectIndex) {
+      case 0:
+        setSource(getDataThisWeek(Record.get()))
+        break
+      case 1:
+        setSource(getDataThisMonth(Record.get()))
+        break
+      case 2:
+        setSource(getDataThisYear(Record.get()))
+        break
+      default:
+        setSource(getDataThisWeek(Record.get()))
+        break
+    }
+    setIndex(selectIndex)
+    setTitle(selectValue)
   }
   return (
     <LayoutWrapper>

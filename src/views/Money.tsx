@@ -37,13 +37,13 @@ const LayoutWrapper = styled.div`
 `
 
 const Money: React.FC = () => {
-  const initialState: MyTypes.MoneyState = { selected: [], note: "", category: "-", output: "0" }
-  const [state, setState] = useState<MyTypes.MoneyState>(initialState)
+  const initialState: myTypes.MoneyState = { selected: [], note: "", category: "-", output: "0" }
+  const [state, setState] = useState<myTypes.MoneyState>(initialState)
   const [showPad, setShowPad] = useState(false)
   const categoryWrapper = useRef<HTMLDivElement>(null)
   const tagsWrapper = useRef<HTMLDivElement>(null)
   const bottom = useRef<HTMLDivElement>(null)
-  const changeFunc = (obj: Partial<MyTypes.MoneyState>) => {
+  const changeFunc = (obj: Partial<myTypes.MoneyState>) => {
     setState({ ...state, ...obj })
   }
   const submit = () => {

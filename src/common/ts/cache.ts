@@ -21,10 +21,10 @@ class Storage {
 const storage = new Storage()
 
 class Record {
-  public static get(): MyTypes.RecordItem[]{
+  public static get(): myTypes.RecordItem[]{
     return storage.get(RECORDS, [])
   }
-  public static set(records: MyTypes.RecordItem[]) {
+  public static set(records: myTypes.RecordItem[]) {
     storage.set(RECORDS, JSON.stringify(records))
   }
 }

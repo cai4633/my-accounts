@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
 import { createTagId, getComplementarySet, getIds } from "../common/ts/util"
 
-interface Classify<T = MyTypes.TagItem> {
+interface Classify<T = myTypes.TagItem> {
   income: T[]
   outcome: T[]
 }
 
 const __TAGS__ = "tags"
-const allTags: MyTypes.TagItem[] = [
+const allTags: myTypes.TagItem[] = [
   { id: createTagId(), name: "服饰", category: "-", icon: "clothes" },
   { id: createTagId(), name: "餐饮", category: "-", icon: "food" },
   { id: createTagId(), name: "住房", category: "-", icon: "house" },
@@ -37,8 +37,8 @@ const allTags: MyTypes.TagItem[] = [
 ]
 function useTag() {
   const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(allTags.slice(0)))
-  const [tags, setTags] = useState<MyTypes.TagItem[]>(defaultTags)
-  const [restTags, setRestTags] = useState<MyTypes.TagItem[]>([])
+  const [tags, setTags] = useState<myTypes.TagItem[]>(defaultTags)
+  const [restTags, setRestTags] = useState<myTypes.TagItem[]>([])
   const [classify, setClassify] = useState<Classify>({ income: [], outcome: [] })
   const [checktags, setChecktags] = useState<number[]>([])
 
@@ -50,7 +50,7 @@ function useTag() {
   }, [tags])
 
   // 根据category将将标签分类
-  function classifyByCategory<T extends { category: MyTypes.Categories }>(tags: T[]) {
+  function classifyByCategory<T extends { category: myTypes.Categories }>(tags: T[]) {
     const income: T[] = []
     const outcome: T[] = []
     tags.forEach((tag) => {
@@ -68,7 +68,7 @@ function useTag() {
     return tags.findIndex((item) => item.id === id)
   }
   // 根据id 获取标签
-  const findTags = (ids: number[]): MyTypes.TagItem[] => {
+  const findTags = (ids: number[]): myTypes.TagItem[] => {
     return ids.map((id) => allTags.filter((tag) => tag.id === id)[0])
   }
 

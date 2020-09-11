@@ -1,5 +1,5 @@
 import { Record } from "@/common/ts/cache.ts"
-import { recordsOrderByDate, settleAccountsByDay, recordsRankByMonth, isTotal } from "@/common/ts/detail"
+import { orderByDate, settleAccountsByDay, recordsRankByMonth, isTotal } from "@/common/ts/detail"
 import { theme, mixin } from "@/common/ts/variable"
 import { useTag } from "@/hooks/useTag"
 import { DatePickerView } from "antd-mobile"
@@ -108,10 +108,9 @@ const LayoutWrapper = styled.div`
     }
   }
 `
-type Rank = [string, MyTypes.RecordItem[]]
 
 interface RecordsType {
-  rank: Rank[]
+  rank: myTypes.Rank[]
   income: number
   outcome: number
 }
@@ -119,9 +118,9 @@ const Detail: React.FC = () => {
   const [date, setDate] = useState<Date>(new Date())
   const [showPicker, setShowPicker] = useState(false)
   const { findTagId, tags } = useTag()
-  const getRecords = (date: Date) => recordsRankByMonth(recordsOrderByDate(Record.get()), date)
-  const [rank, setRank] = useState<[string, MyTypes.RecordItem[]][]>([])
+  const getRecords = (date: Date) => recordsRankByMonth(Record.get(), date)
   const [records, setRecords] = useState<RecordsType>(getRecords(date))
+  const [rank, setRank] = useState<ReturnType<typeof orderByDate>>([])
   const [total, setTotal] = useState<Pick<RecordsType, "income" | "outcome">>({ income: 0, outcome: 0 })
   const getDay = (day: string) => {
     const today = dayjs().format("YYYY-MM-DD")
@@ -187,7 +186,7 @@ const Detail: React.FC = () => {
           )}
         </div>
         <div className="content-wrapper">
-          {rank.map((record: Rank) => {
+          {rank.map((record: myTypes.Rank) => {
             const showData = settleAccountsByDay(record[1])
             return (
               <div className="content" key={record[0]}>

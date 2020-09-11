@@ -75,7 +75,7 @@ const TagsContainer: React.FC<Props> = (props) => {
       togglePad([tagid])
     }
   }
-  const Item = (tag: MyTypes.TagItem) => {
+  const Item = (tag: myTypes.TagItem) => {
     return (
       <React.Fragment>
         <Icon name={tag.icon}></Icon>
@@ -84,7 +84,7 @@ const TagsContainer: React.FC<Props> = (props) => {
     )
   }
   //路由部分
-  const navLink = (tag: MyTypes.TagItem) => {
+  const navLink = (tag: myTypes.TagItem) => {
     return (
       <li
         key={tag.id}
@@ -101,7 +101,7 @@ const TagsContainer: React.FC<Props> = (props) => {
   }
 
   // addTag部分
-  const add = (tag: MyTypes.TagItem) => {
+  const add = (tag: myTypes.TagItem) => {
     return (
       <li
         key={tag.id}
@@ -117,7 +117,7 @@ const TagsContainer: React.FC<Props> = (props) => {
     <div>
       <TagsWrapper>
         <ol>
-          { tags && tags.map((tag: MyTypes.TagItem) => {
+          { tags && tags.map((tag: myTypes.TagItem) => {
             return addBtn ? navLink(tag) : add(tag)
           })}
 

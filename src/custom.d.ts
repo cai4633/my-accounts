@@ -1,4 +1,4 @@
-declare namespace MyTypes {
+declare namespace myTypes {
   interface PriceItem {
     id: number
     title: string
@@ -36,7 +36,7 @@ declare namespace MyTypes {
   type RecordItem = { selected: number[]; note: string; category: Categories; output: string; createAt: string }
 
   interface RecordOrdersItem {
-    [key: string]: MyTypes.RecordItem[]
+    [key: string]: myTypes.RecordItem[]
   }
 
   interface RecordOrders<T = RecordOrdersItem> {
@@ -51,8 +51,9 @@ declare namespace MyTypes {
     income: number
     outcome: number
   }
+  type Rank = [string, myTypes.RecordItem[]]
+  type WeekItem = [string, number, number]
 }
-
 
 //  declare type CascaderOneValue = string | number;
 //  declare type CascaderValue = CascaderOneValue[];

@@ -21,8 +21,8 @@ const LayoutWrapper = styled.div`
 const Tags = () => {
   const map: MapType = { "+": "income", "-": "outcome" }
   const { tags, addTag, classify } = useTag()
-  const [category, setCategory] = useState<MyTypes.Categories>("-")
-  const onchange = (val: MyTypes.Categories) => {
+  const [category, setCategory] = useState<myTypes.Categories>("-")
+  const onchange = (val: myTypes.Categories) => {
     setCategory(val)
   }
   return (

@@ -5,7 +5,7 @@ import { IconFont }  from '@/index'
 
 const { Text } = Typography
 
-export default ({ items, onModifyItem, onDeleteItem }: MyTypes.PropType) => {
+export default ({ items, onModifyItem, onDeleteItem }: myTypes.PropType) => {
   return (
     <div className="price-list">
       {items.map((item) => (

@@ -2,7 +2,7 @@ import React from "react"
 import { TagWrapper } from "./TagWrapper"
 import { useTag } from "@/hooks/useTag"
 
-const TagSection: React.FC<MyTypes.Prop> = (prop) => {
+const TagSection: React.FC<myTypes.Prop> = (prop) => {
   const { tags, addTag } = useTag()
   const selectedTags = prop.selected
   const setSelectedTags = prop.onchange
@@ -23,7 +23,7 @@ const TagSection: React.FC<MyTypes.Prop> = (prop) => {
   return (
     <TagWrapper>
       <div className="tag-wrapper">
-        {tags.map((tag: MyTypes.TagItem) => {
+        {tags.map((tag: myTypes.TagItem) => {
           return (
             <span
               key={tag.id}
