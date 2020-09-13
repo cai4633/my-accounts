@@ -28,9 +28,8 @@ const LayoutWrapper = styled.div`
 `
 const Detail: React.FC = () => {
   const set = ["本周", "本月", "今年"] as const
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(0) //切换年月周
   const [title, setTitle] = useState("周")
-  const [source, setSource] = useState<myTypes.WeekItem[]>(getDataThisWeek(Record.get()))
   const [node, setNode] = useState<HTMLDivElement>()
   const [chart, setChart] = useState<echarts.ECharts>()
 
@@ -55,11 +54,11 @@ const Detail: React.FC = () => {
         },
         xAxis: { type: "category" },
         dataset: {
-          source,
+          source: getDataThisWeek(Record.get()),
         },
         series: [
           {
-            name: "支出",
+            name: "收入",
             type: "line",
             dimensions: ["date", "income", "outcome"],
             encode: {
@@ -71,43 +70,50 @@ const Detail: React.FC = () => {
       })
     }
   }, [node])
-  useEffect(() => {
-    chart?.setOption(
-      {
-        dataset: {
-          source,
-        },
-      },
-      false,
-      true
-    )
-  }, [source])
 
+  const setOptionSource = (data: myTypes.WeekItem[]) => {
+    chart?.setOption({
+      dataset: {
+        source: data,
+      },
+    })
+  }
   const onChange = (e: any) => {
     const selectIndex = e.nativeEvent.selectedSegmentIndex
     const selectValue = e.nativeEvent.value
     switch (selectIndex) {
       case 0:
-        setSource(getDataThisWeek(Record.get()))
+        setOptionSource(getDataThisWeek(Record.get()))
         break
       case 1:
-        setSource(getDataThisMonth(Record.get()))
+        setOptionSource(getDataThisMonth(Record.get()))
         break
       case 2:
-        setSource(getDataThisYear(Record.get()))
+        setOptionSource(getDataThisYear(Record.get()))
         break
       default:
-        setSource(getDataThisWeek(Record.get()))
+        setOptionSource(getDataThisWeek(Record.get()))
         break
     }
     setIndex(selectIndex)
     setTitle(selectValue)
   }
+  const pickerChange = (data: string) => {
+    const map: { [key: string]: number } = { 收入: 1, 支出: 2 }
+    chart?.setOption({
+      series: [
+        {
+          name: data,
+          encode: { x: 0, y: map[data] },
+        },
+      ],
+    })
+  }
   return (
     <LayoutWrapper>
       <Layout className="statistics">
         <div className="header">
-          <Picker></Picker>
+          <Picker onChange={pickerChange}></Picker>
           <Tabs onChange={onChange} index={index}></Tabs>
         </div>
         <div className="chart">

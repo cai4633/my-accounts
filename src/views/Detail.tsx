@@ -204,8 +204,8 @@ const Detail: React.FC = () => {
                         {item.selected.map((id) => {
                           return (
                             <span className="tag" key={id}>
-                              <Icon name={tags[findTagId(id)].icon}></Icon>
-                              <span className="text">{tags[findTagId(id)].name}</span>
+                              <Icon name={tags[findTagId(id)]?.icon}></Icon>
+                              <span className="text">{tags[findTagId(id)]?.name}</span>
                             </span>
                           )
                         })}

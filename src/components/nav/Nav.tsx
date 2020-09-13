@@ -37,6 +37,11 @@ function Nav() {
     <NavWrapper>
       <ul>
         <li>
+          <NavLink to="/home" activeClassName="selected">
+            <Icon name="statistics"></Icon>首页
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/detail" activeClassName="selected">
             <Icon name="statistics"></Icon>明细
           </NavLink>

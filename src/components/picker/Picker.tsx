@@ -37,7 +37,9 @@ const texts = [
     value: "支出",
   },
 ]
-interface Props {}
+interface Props {
+  onChange?: (date: string) => void
+}
 const Pick = (props: Props) => {
   const [value, setValue] = useState<string>("收入")
   return (
@@ -51,6 +53,7 @@ const Pick = (props: Props) => {
         onChange={(date) => {
           if (date && typeof date[0] === "string") {
             setValue(date[0])
+            props.onChange!(date[0])
           }
         }}>
         <List.Item align="middle" arrow="down">

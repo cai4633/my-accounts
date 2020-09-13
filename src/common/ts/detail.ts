@@ -75,8 +75,8 @@ function recordsRankByMonth(data: myTypes.RecordItem[], date: Date) {
 function getDataThisWeek(data: myTypes.RecordItem[]) {
   const sortData = orderByDate(data)
   const thisWeek: myTypes.WeekItem[] = [] //[date,income,outcome]
-  const xData = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-  for (let i = 1; i <= 7; i++) {
+  const xData = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
+  for (let i = 0; i < 7; i++) {
     //获取本周七天的日期
     thisWeek.push([dayjs().day(i).format("YYYY-MM-DD"), 0, 0])
   }
@@ -91,7 +91,6 @@ function getDataThisWeek(data: myTypes.RecordItem[]) {
       }
     }
   })
-
   return thisWeek.map((item, index): myTypes.WeekItem => [xData[index], item[1], item[2]])
 }
 function getDataThisMonth(data: myTypes.RecordItem[]) {
@@ -100,7 +99,7 @@ function getDataThisMonth(data: myTypes.RecordItem[]) {
   const xData: string[] = []
   for (let i = 1; i <= 31; i++) {
     xData.push(i + "")
-    thisMonth.push([dayjs().day(i).format("YYYY-MM-DD"), 0, 0])
+    thisMonth.push([dayjs().date(i).format("YYYY-MM-DD"), 0, 0])
   }
   sortData.forEach((item) => {
     for (let i = 0; i < 31; i++) {

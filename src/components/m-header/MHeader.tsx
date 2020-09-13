@@ -1,4 +1,4 @@
-import React, { ReactChild } from "react"
+import React from "react"
 import styled from "styled-components"
 import Icon from "../icon/Icon"
 import { useHistory } from "react-router-dom"
@@ -19,6 +19,7 @@ const Header = styled.header`
     font-size: 16px;
     font-weight: normal;
     padding: 0 20px;
+    margin: 0;
     .title {
       line-height: 3em;
     }

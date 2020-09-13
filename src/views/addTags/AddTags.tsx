@@ -1,6 +1,5 @@
-import Icon from "@/components/icon/Icon"
 import MHeader from "@/components/m-header/MHeader"
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { useTag } from "@/hooks/useTag"
 import Layout from "@/components/layout/Layout"
@@ -11,7 +10,7 @@ const LayoutWrapper = styled.div`
   background-color: #e5e5e5;
 `
 const AddTags: React.FC = () => {
-  const { tags, addTag, allTags, checktags, setChecktags, restTags } = useTag()
+  const { addTag, checktags, setChecktags, restTags } = useTag()
   const history = useHistory()
 
   // 添加标签页面的toggle事件

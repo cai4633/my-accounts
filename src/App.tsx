@@ -7,11 +7,13 @@ import Detail from "@/views/Detail"
 import NoMatch from "views/NoMatch"
 import EditTag from "views/editTag/EditTag"
 import AddTags from "views/addTags/AddTags"
-import Statistics from 'views/Statistics'
+import Statistics from "views/Statistics"
+import Home from "views/home/home"
 function App() {
   return (
     <Router>
       <Switch>
+        <Route exact path="/home" component={Home} />
         <Route exact path="/tags" component={Tags} />
         <Route exact path="/tags/:tagId" component={EditTag} />
         <Route exact path="/addTags" component={AddTags} />
