@@ -17,7 +17,7 @@ const Tab = (props: Props) => {
         <SegmentedControl
           values={["周", "月", "年"]}
           onChange={props.onChange}
-          tintColor="#333"
+          tintColor="#222"
           style={{ backgroundColor: theme.backgroundColor }}
           selectedIndex={props.index}
         />

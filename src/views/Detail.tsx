@@ -11,6 +11,7 @@ import Icon from "@/components/icon/Icon"
 
 const LayoutWrapper = styled.div`
   .category-wrapper {
+    color: ${theme.color};
     text-align: center;
     background-color: ${theme.backgroundColor};
     button {
@@ -44,7 +45,7 @@ const LayoutWrapper = styled.div`
           display: block;
           width: 2px;
           height: calc(100% - 16px);
-          background-color: #000;
+          background-color: ${theme.color};
         }
       }
       .income,

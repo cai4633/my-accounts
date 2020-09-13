@@ -24,7 +24,7 @@ const NavWrapper = styled.nav`
         }
         &.selected {
           background-color: ${theme.backgroundColor};
-          color: rgba(0, 0, 0, 1);
+          color: ${theme.color};
           font-weight: 600;
         }
       }

@@ -8,7 +8,7 @@ import NoMatch from "views/NoMatch"
 import EditTag from "views/editTag/EditTag"
 import AddTags from "views/addTags/AddTags"
 import Statistics from "views/Statistics"
-import Home from "views/home/home"
+import Home from "views/home/Home"
 function App() {
   return (
     <Router>

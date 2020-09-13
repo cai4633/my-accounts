@@ -13,6 +13,9 @@ const LayoutWrapper = styled.div`
   .header {
     background-color: ${theme.backgroundColor};
     padding-bottom: 15px;
+    .am-list-content {
+      color: ${theme.color};
+    }
   }
   .chart {
     .title {

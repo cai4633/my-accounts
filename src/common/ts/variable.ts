@@ -1,5 +1,7 @@
 const theme = {
-  backgroundColor: "#ffda47",
+  backgroundColor: "#06c",
+  // backgroundColor: "#ffda47",
+  color: "#fff",
   iconBackground: "#f1f1f1",
   dateBackground: "#e5e5e5",
   dateColor: "#777",

@@ -5,11 +5,13 @@ import { useHistory } from "react-router-dom"
 
 const CategoryWrapper = styled.section`
   display: flex;
+  color: ${theme.color};
   background-color: ${theme.backgroundColor};
   font-size: 16px;
   justify-content: center;
   align-items: center;
   button {
+    color: ${theme.color};
     max-width: 20%;
     line-height: 3em;
     flex: 1;
@@ -20,9 +22,9 @@ const CategoryWrapper = styled.section`
       content: "";
       display: block;
       position: absolute;
-      background-color: #000;
+      background-color: ${theme.color};
       width: 100%;
-      height: 3px;
+      height: 4px;
       left: 0;
       bottom: 0px;
     }
