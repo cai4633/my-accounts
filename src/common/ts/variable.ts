@@ -1,10 +1,12 @@
 const theme = {
   backgroundColor: "#06c",
+  backgroundWhite: "#eee",
   // backgroundColor: "#ffda47",
   color: "#fff",
+  text_color_grey: "#777",
+  text_color_darker: "#aaa",
   iconBackground: "#f1f1f1",
   dateBackground: "#e5e5e5",
-  dateColor: "#777",
   borderColor: "#ddd",
 }
 const mixin = {

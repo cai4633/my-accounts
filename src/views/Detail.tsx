@@ -71,9 +71,14 @@ const LayoutWrapper = styled.div`
 
   .content-wrapper {
     overflow: auto;
+
     .content {
+      margin-top: 1em;
+      &:nth-child(1) {
+        margin-top: 0em;
+      }
       h2 {
-        color: ${theme.dateColor};
+        color: ${theme.text_color_grey};
         border-bottom: 1px solid ${theme.borderColor};
         font-size: 12px;
         line-height: 1.8;
@@ -99,7 +104,7 @@ const LayoutWrapper = styled.div`
           .note {
             flex: 1;
             margin: 0 10px;
-            color: #aaa;
+            color: ${theme.text_color_darker};
             font-size: 14px;
             text-align: left;
             ${mixin.noWrap}
@@ -187,19 +192,19 @@ const Detail: React.FC = () => {
           )}
         </div>
         <div className="content-wrapper">
-          {rank.map((record: myTypes.Rank) => {
-            const showData = settleAccountsByDay(record[1])
+          {rank.map((item: myTypes.Rank) => {
+            const showData = settleAccountsByDay(item[1])
             return (
-              <div className="content" key={record[0]}>
+              <div className="content" key={item[0]}>
                 <h2>
-                  <span className="date">{getDay(record[0])}</span>
+                  <span className="date">{getDay(item[0])}</span>
                   <div className="total">
                     <span className="title">{isTotal(showData) && showData.title}</span>
                     <span className="number">{isTotal(showData) && showData.total}</span>
                   </div>
                 </h2>
                 <ul className="detail">
-                  {record[1].map((item, index) => {
+                  {item[1].map((item, index) => {
                     return (
                       <li key={index + 10000}>
                         {item.selected.map((id) => {
@@ -210,7 +215,7 @@ const Detail: React.FC = () => {
                             </span>
                           )
                         })}
-                        <span className="note no-wrap">{item.note}s</span>
+                        <span className="note no-wrap">{item.note}</span>
                         <span className="amount">
                           {item.category}
                           {item.output}

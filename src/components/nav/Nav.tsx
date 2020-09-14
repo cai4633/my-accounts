@@ -19,6 +19,11 @@ const NavWrapper = styled.nav`
         justify-content: center;
         align-items: center;
         color: rgba(0, 0, 0, 0.3);
+        font-size: 12px;
+        svg {
+          width: 2em;
+          height: 2em;
+        }
         .icon {
           margin-bottom: 5px;
         }
@@ -26,6 +31,9 @@ const NavWrapper = styled.nav`
           background-color: ${theme.backgroundColor};
           color: ${theme.color};
           font-weight: 600;
+          svg {
+            fill: ${theme.color};
+          }
         }
       }
     }
@@ -38,17 +46,17 @@ function Nav() {
       <ul>
         <li>
           <NavLink to="/home" activeClassName="selected">
-            <Icon name="statistics"></Icon>首页
+            <Icon name="home"></Icon>首页
           </NavLink>
         </li>
         <li>
           <NavLink to="/detail" activeClassName="selected">
-            <Icon name="statistics"></Icon>明细
+            <Icon name="details"></Icon>明细
           </NavLink>
         </li>
         <li>
           <NavLink to="/money" activeClassName="selected">
-            <Icon name="money"></Icon>记账
+            <Icon name="add_money"></Icon>记账
           </NavLink>
         </li>
         <li>

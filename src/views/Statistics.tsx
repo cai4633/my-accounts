@@ -8,7 +8,9 @@ import Layout from "components/layout/Layout"
 import echarts from "echarts"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
+import { getTotal } from "common/ts/statistics"
 
+const paddingLeft = "20px"
 const LayoutWrapper = styled.div`
   .header {
     background-color: ${theme.backgroundColor};
@@ -17,16 +19,22 @@ const LayoutWrapper = styled.div`
       color: ${theme.color};
     }
   }
-  .chart {
+  .content {
     .title {
       font-size: 1em;
       padding: 10px 20px;
       margin: 0;
       border-bottom: 1px solid #ccc;
+      margin-bottom: 10px;
     }
-  }
-
-  .content-wrapper {
+    p {
+      color: ${theme.text_color_grey};
+      padding: 2px ${paddingLeft};
+      font-size: 12px;
+    }
+    #chart {
+      margin: 0px 5px;
+    }
   }
 `
 const Detail: React.FC = () => {
@@ -35,10 +43,11 @@ const Detail: React.FC = () => {
   const [title, setTitle] = useState("周")
   const [node, setNode] = useState<HTMLDivElement>()
   const [chart, setChart] = useState<echarts.ECharts>()
+  const [total, setTotal] = useState<myTypes.AccountType>(getTotal(getDataThisWeek(Record.get())))
 
   // 第一次mounted
   useEffect(() => {
-    setNode(document.getElementById("main") as HTMLDivElement)
+    setNode(document.getElementById("chart") as HTMLDivElement)
     if (node) {
       const myChart = echarts.init(node)
       setChart(myChart)
@@ -86,16 +95,24 @@ const Detail: React.FC = () => {
     const selectValue = e.nativeEvent.value
     switch (selectIndex) {
       case 0:
-        setOptionSource(getDataThisWeek(Record.get()))
+        const source0 = getDataThisWeek(Record.get())
+        setTotal(getTotal(source0))
+        setOptionSource(source0)
         break
       case 1:
-        setOptionSource(getDataThisMonth(Record.get()))
+        const source1 = getDataThisMonth(Record.get())
+        setTotal(getTotal(source1))
+        setOptionSource(source1)
         break
       case 2:
-        setOptionSource(getDataThisYear(Record.get()))
+        const source2 = getDataThisYear(Record.get())
+        setTotal(getTotal(source2))
+        setOptionSource(source2)
         break
       default:
-        setOptionSource(getDataThisWeek(Record.get()))
+        const source3 = getDataThisWeek(Record.get())
+        setTotal(getTotal(source3))
+        setOptionSource(source3)
         break
     }
     setIndex(selectIndex)
@@ -119,10 +136,12 @@ const Detail: React.FC = () => {
           <Picker onChange={pickerChange}></Picker>
           <Tabs onChange={onChange} index={index}></Tabs>
         </div>
-        <div className="chart">
+        <div className="content">
           <h1 className="title">{set[index]}</h1>
+          <p>总收入:￥{total.income}</p>
+          <p>总支出:￥{total.outcome}</p>
+          <div style={{ height: "300px" }} id="chart" className="chart"></div>
         </div>
-        <div style={{ height: "250px" }} id="main"></div>
       </Layout>
     </LayoutWrapper>
   )

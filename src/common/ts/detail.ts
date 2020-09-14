@@ -1,5 +1,7 @@
 import dayjs from "dayjs"
 
+const YMD = "YYYY-MM-DD"
+const YM = "YYYY-MM"
 // 自定义类型保护
 const isTotal = (t: myTypes.TotalType | myTypes.AccountType): t is myTypes.TotalType => (t as myTypes.TotalType).total !== undefined
 
@@ -49,9 +51,9 @@ function settleAccountsByDay(target: myTypes.RecordItem[], type = true) {
 // 将原始数据按照月份分类排列
 function recordsRankByMonth(data: myTypes.RecordItem[], date: Date) {
   const records = orderByDate(data)
-  const YM = dayjs(date).format("YYYY-MM") //仅保留年月
-  const startDate = dayjs(YM).unix()
-  const endDate = dayjs(YM).add(1, "month").unix()
+  const ym = dayjs(date).format(YM) //仅保留年月
+  const startDate = dayjs(ym).unix()
+  const endDate = dayjs(ym).add(1, "month").unix()
   const rank = records.filter((value) => {
     const current = dayjs(value[0]).unix()
     return current >= startDate && current < endDate
@@ -72,13 +74,33 @@ function recordsRankByMonth(data: myTypes.RecordItem[], date: Date) {
 
   return { rank, income, outcome }
 }
+function getDataToday(data: myTypes.RecordItem[]) {
+  type ReturnType = {
+    total: myTypes.TotalType
+    records: myTypes.RecordItem[]
+  }
+  const ret: ReturnType = { total: { title: "", total: 0 }, records: [] }
+  const sortData = orderByDate(data)
+  const today = dayjs().format(YMD)
+  sortData.forEach((item) => {
+    if (item[0] === today) {
+      const total = settleAccountsByDay(item[1])
+      if (isTotal(total)) {
+        ret.total = total
+        ret.records = item[1]
+      }
+    }
+  })
+  return ret
+}
+
 function getDataThisWeek(data: myTypes.RecordItem[]) {
   const sortData = orderByDate(data)
   const thisWeek: myTypes.WeekItem[] = [] //[date,income,outcome]
   const xData = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
   for (let i = 0; i < 7; i++) {
     //获取本周七天的日期
-    thisWeek.push([dayjs().day(i).format("YYYY-MM-DD"), 0, 0])
+    thisWeek.push([dayjs().day(i).format(YMD), 0, 0])
   }
   sortData.forEach((item) => {
     for (let i = 0; i < 7; i++) {
@@ -93,13 +115,14 @@ function getDataThisWeek(data: myTypes.RecordItem[]) {
   })
   return thisWeek.map((item, index): myTypes.WeekItem => [xData[index], item[1], item[2]])
 }
+
 function getDataThisMonth(data: myTypes.RecordItem[]) {
   const sortData = orderByDate(data)
   const thisMonth: myTypes.WeekItem[] = [] //[date,income,outcome]
   const xData: string[] = []
   for (let i = 1; i <= 31; i++) {
     xData.push(i + "")
-    thisMonth.push([dayjs().date(i).format("YYYY-MM-DD"), 0, 0])
+    thisMonth.push([dayjs().date(i).format(YMD), 0, 0])
   }
   sortData.forEach((item) => {
     for (let i = 0; i < 31; i++) {
@@ -124,11 +147,11 @@ function getDataThisYear(data: myTypes.RecordItem[]) {
     //获取今年的月份
     const date = dayjs()
       .month(i - 1)
-      .format("YYYY-MM")
+      .format(YM)
     const total = recordsRankByMonth(data, new Date(Date.parse(date)))
     thisYear.push([date, total.income, total.outcome])
   }
   return thisYear.map((item, index): myTypes.WeekItem => [xData[index], item[1], item[2]])
 }
 
-export { orderByDate, settleAccountsByDay, recordsRankByMonth, isTotal, getDataThisWeek, getDataThisMonth, getDataThisYear }
+export { orderByDate, settleAccountsByDay, recordsRankByMonth, isTotal, getDataThisWeek, getDataThisMonth, getDataThisYear, getDataToday }

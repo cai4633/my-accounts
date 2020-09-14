@@ -20,7 +20,7 @@ function App() {
         <Route exact path="/money" component={Money} />
         <Route exact path="/detail" component={Detail} />
         <Route exact path="/statistics" component={Statistics} />
-        <Redirect exact from="/" to="/detail"></Redirect>
+        <Redirect exact from="/" to="/home"></Redirect>
         <Route path="*" component={NoMatch} />
       </Switch>
     </Router>
