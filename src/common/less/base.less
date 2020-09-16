@@ -1,5 +1,7 @@
 @import "./variable.less";
 
+@timeout: 300ms;
+
 html {
   font-size: 16px;
 }
@@ -23,4 +25,32 @@ code {
     display: block;
     clear: both;
   }
+}
+
+.fade-enter {
+  opacity: 0.01;
+  transform: translateY(100%);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0%);
+  transition: all @timeout ease-out;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: all @timeout ease-in;
+}
+.fade-appear {
+  transform: translateY(100%);
+}
+
+.fade-appear-active {
+  transform: translateY(0%);
+  transition: all @timeout linear;
 }

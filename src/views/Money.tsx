@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from "react"
-import NoteSection from "./edit/NoteSection"
-import CategorySection from "components/categorySection/CategorySection"
-import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
 import { Record } from "@/common/ts/cache"
-import dayjs from "dayjs"
-import { useTag } from "@/hooks/useTag"
 import TagsContainer from "@/components/tagsContainer/TagsContainer"
+import { useTag } from "@/hooks/useTag"
+import CategorySection from "components/categorySection/CategorySection"
+import dayjs from "dayjs"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
+import NoteSection from "./edit/NoteSection"
+import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
+import { CSSTransition, TransitionGroup } from "react-transition-group"
 
 interface MapType {
   [key: string]: "income" | "outcome"
@@ -17,6 +18,22 @@ const LayoutWrapper = styled.div`
   /* position: relative; */
   height: 100vh;
   overflow: auto;
+  .slide-enter {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  .slide-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 800ms;
+  }
+  .slide-exit {
+    opacity: 1;
+  }
+  .slide-exit-active {
+    opacity: 0;
+    transition: opacity 800ms;
+  }
   main {
     height: 100%;
     overflow: auto;
@@ -39,6 +56,7 @@ const LayoutWrapper = styled.div`
 const Money: React.FC = () => {
   const initialState: myTypes.MoneyState = { selected: [], note: "", category: "-", output: "0" }
   const [state, setState] = useState<myTypes.MoneyState>(initialState)
+  const [inProp, setInProp] = useState(false)
   const [showPad, setShowPad] = useState(false)
   const categoryWrapper = useRef<HTMLDivElement>(null)
   const tagsWrapper = useRef<HTMLDivElement>(null)
@@ -55,6 +73,10 @@ const Money: React.FC = () => {
   const selectTag = (selected: number[]) => {
     changeFunc({ selected })
   }
+
+  useEffect(() => {
+    // setInProp(true)
+  }, [])
   // 当selected 改变时, showpad跟着改变
   useEffect(() => {
     setShowPad(!!state.selected.length)
@@ -69,16 +91,19 @@ const Money: React.FC = () => {
   }, [showPad])
   return (
     <LayoutWrapper>
-      <main>
-        <div className="category-wrapper" ref={categoryWrapper}>
-          <CategorySection category={state.category} onchange={(category) => changeFunc({ category })}></CategorySection>
-        </div>
-        <div className="tags-wrapper" ref={tagsWrapper}>
-          <TagsContainer tags={classify[map[state.category]]} parent="money" togglePad={selectTag} selected={state.selected}></TagsContainer>
-        </div>
-      </main>
+      <CSSTransition appear in classNames="fade" timeout={300} >
+        <main>
+          <div className="category-wrapper" ref={categoryWrapper}>
+            <CategorySection category={state.category} onchange={(category) => changeFunc({ category })}></CategorySection>
+          </div>
+          <div className="tags-wrapper" ref={tagsWrapper}>
+            <TagsContainer tags={classify[map[state.category]]} parent="money" togglePad={selectTag} selected={state.selected}></TagsContainer>
+          </div>
+        </main>
+      </CSSTransition>
+
       {showPad && (
-        <section className="bottom" ref={bottom}>
+        <section className="bottom" ref={bottom} id="111">
           <NoteSection note={state.note} onchange={(note) => changeFunc({ note })}></NoteSection>
           <NumberPadSection output={state.output} onchange={(output) => changeFunc({ output })} onOk={submit}></NumberPadSection>
         </section>

@@ -1,14 +1,13 @@
 import { Record } from "@/common/ts/cache"
-import { getDataThisMonth, getDataThisWeek, getDataThisYear, recordsRankByMonth } from "@/common/ts/detail"
+import { getDataThisMonth, getDataThisWeek, getDataThisYear } from "@/common/ts/detail"
 import { theme } from "@/common/ts/variable"
 import Picker from "@/components/picker/Picker"
 import Tabs from "@/components/tabs/Tabs"
-import { useTag } from "@/hooks/useTag"
+import { getTotal } from "common/ts/statistics"
 import Layout from "components/layout/Layout"
 import echarts from "echarts"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { getTotal } from "common/ts/statistics"
 
 const paddingLeft = "20px"
 const LayoutWrapper = styled.div`
@@ -36,6 +35,7 @@ const LayoutWrapper = styled.div`
       margin: 0px 5px;
     }
   }
+
 `
 const Detail: React.FC = () => {
   const set = ["本周", "本月", "今年"] as const
@@ -44,7 +44,6 @@ const Detail: React.FC = () => {
   const [node, setNode] = useState<HTMLDivElement>()
   const [chart, setChart] = useState<echarts.ECharts>()
   const [total, setTotal] = useState<myTypes.AccountType>(getTotal(getDataThisWeek(Record.get())))
-
   // 第一次mounted
   useEffect(() => {
     setNode(document.getElementById("chart") as HTMLDivElement)
