@@ -34,6 +34,7 @@ const LayoutWrapper = styled.div`
   }
   section.bottom {
     position: absolute;
+    width: 100%;
     bottom: 0;
     left: 0;
   }
