@@ -3,7 +3,6 @@ import { getDataThisMonth, getDataThisWeek, getDataThisYear } from "@/common/ts/
 import { theme } from "@/common/ts/variable"
 import Picker from "@/components/picker/Picker"
 import Tabs from "@/components/tabs/Tabs"
-import { useRecord } from "@/hooks/useRecord"
 import { getTotal } from "common/ts/statistics"
 import Layout from "components/layout/Layout"
 import echarts from "echarts"
@@ -12,6 +11,7 @@ import styled from "styled-components"
 
 const paddingLeft = "20px"
 const LayoutWrapper = styled.div`
+  position: relative;
   .header {
     background-color: ${theme.backgroundColor};
     padding-bottom: 15px;

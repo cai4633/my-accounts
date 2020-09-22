@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import { Picker, List } from "antd-mobile"
 import { theme } from "@/common/ts/variable"
-
+// TODO: pc端 popup 宽度问题
 const Wrapper = styled.div`
   text-align: center;
   .am-list-item {
@@ -27,6 +27,7 @@ const colorStyle = {
   height: "16px",
   marginRight: "10px",
 }
+
 const texts = [
   {
     label: "收入",

@@ -1,4 +1,3 @@
-import { Record } from "@/common/ts/cache.ts"
 import { orderByDate, settleAccountsByDay, recordsRankByMonth, isTotal } from "@/common/ts/detail"
 import { theme, mixin } from "@/common/ts/variable"
 import { useTag } from "@/hooks/useTag"
@@ -11,6 +10,7 @@ import Icon from "@/components/icon/Icon"
 import { Context } from "@/common/ts/context"
 
 const LayoutWrapper = styled.div`
+  position: relative;
   .category-wrapper {
     color: ${theme.color};
     text-align: center;
@@ -56,7 +56,7 @@ const LayoutWrapper = styled.div`
     }
     .datePickerWrapper {
       background: #fff;
-      position: fixed;
+      position: absolute;
       bottom: 0px;
       left: 0px;
       width: 100%;

@@ -1,16 +1,16 @@
 import { Record } from "@/common/ts/cache"
+import { Context } from "@/common/ts/context"
 import TagsContainer from "@/components/tagsContainer/TagsContainer"
 import { useTag } from "@/hooks/useTag"
+import { addRecords } from "api/records"
 import CategorySection from "components/categorySection/CategorySection"
 import dayjs from "dayjs"
 import React, { useContext, useEffect, useRef, useState } from "react"
+import { useHistory } from "react-router-dom"
+import { CSSTransition } from "react-transition-group"
 import styled from "styled-components"
 import NoteSection from "./edit/NoteSection"
 import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
-import { CSSTransition, TransitionGroup } from "react-transition-group"
-import { addRecords, getAllRecords } from "api/records"
-import { useRecord } from "@/hooks/useRecord"
-import { Context } from "@/common/ts/context"
 interface MapType {
   [key: string]: "income" | "outcome"
 }
@@ -46,7 +46,8 @@ const Money: React.FC = () => {
   const categoryWrapper = useRef<HTMLDivElement>(null)
   const tagsWrapper = useRef<HTMLDivElement>(null)
   const bottom = useRef<HTMLDivElement>(null)
-  const { state, dispatch } = useContext(Context)
+  const { dispatch } = useContext(Context)
+  const history = useHistory()
   const changeFunc = (obj: Partial<myTypes.MoneyState>) => {
     setData({ ...data, ...obj })
   }
@@ -56,6 +57,7 @@ const Money: React.FC = () => {
     addRecords([result])
     dispatch({ type: "add", data: result })
     setData(Object.assign({}, initState)) //reset
+    history.goBack()
   }
   const map: MapType = { "+": "income", "-": "outcome" }
   let { classify } = useTag()

@@ -10,6 +10,7 @@ const CategoryWrapper = styled.section`
   font-size: 16px;
   justify-content: center;
   align-items: center;
+  position: relative;
   button {
     color: ${theme.color};
     max-width: 20%;

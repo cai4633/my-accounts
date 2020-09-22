@@ -6,7 +6,6 @@ import { theme, mixin } from "common/ts/variable"
 import Icon from "components/icon/Icon"
 import { getDataToday } from "common/ts/detail"
 import { useTag } from "@/hooks/useTag"
-import { Record } from "@/common/ts/cache"
 import { Context } from "@/common/ts/context"
 const Wrapper = styled.div`
   background-color: ${theme.backgroundWhite};
