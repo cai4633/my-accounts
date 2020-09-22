@@ -1,8 +1,17 @@
 const TAGID = "tagid"
-let id = -1
+let tagid = -1
+let recordId = -1
 function createTagId() {
-  id++
-  return id
+  tagid++
+  return tagid
+}
+
+function createRecordId(lastId?: number) {
+  if (lastId !== undefined) {
+    recordId = lastId
+  }
+  recordId++
+  return 1000 + recordId
 }
 
 function getComplementarySet<T>(subset: T[], array: T[]): T[] {
@@ -12,4 +21,4 @@ function getComplementarySet<T>(subset: T[], array: T[]): T[] {
 function getIds<T extends { id: number }>(array: T[]): number[] {
   return array.map((val) => val.id)
 }
-export { createTagId, getComplementarySet, getIds }
+export { createTagId, getComplementarySet, getIds, createRecordId }

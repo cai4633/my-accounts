@@ -41,7 +41,7 @@ interface Props {
   onChange?: (date: string) => void
 }
 const Pick = (props: Props) => {
-  const [value, setValue] = useState<string>("收入")
+  const [value, setValue] = useState<string>("支出")
   return (
     <Wrapper className="wrapper">
       <Picker

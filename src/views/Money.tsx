@@ -3,12 +3,14 @@ import TagsContainer from "@/components/tagsContainer/TagsContainer"
 import { useTag } from "@/hooks/useTag"
 import CategorySection from "components/categorySection/CategorySection"
 import dayjs from "dayjs"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import NoteSection from "./edit/NoteSection"
 import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
-
+import { addRecords, getAllRecords } from "api/records"
+import { useRecord } from "@/hooks/useRecord"
+import { Context } from "@/common/ts/context"
 interface MapType {
   [key: string]: "income" | "outcome"
 }
@@ -38,30 +40,33 @@ const LayoutWrapper = styled.div`
 `
 
 const Money: React.FC = () => {
-  const initialState: myTypes.MoneyState = { selected: [], note: "", category: "-", output: "0" }
-  const [state, setState] = useState<myTypes.MoneyState>(initialState)
+  const initState: myTypes.MoneyState = { selected: [], note: "", category: "-", output: "0", id: 0 }
+  const [data, setData] = useState<myTypes.MoneyState>(initState)
   const [showPad, setShowPad] = useState(false)
   const categoryWrapper = useRef<HTMLDivElement>(null)
   const tagsWrapper = useRef<HTMLDivElement>(null)
   const bottom = useRef<HTMLDivElement>(null)
+  const { state, dispatch } = useContext(Context)
   const changeFunc = (obj: Partial<myTypes.MoneyState>) => {
-    setState({ ...state, ...obj })
+    setData({ ...data, ...obj })
   }
   const submit = () => {
-    Record.set([...Record.get(), { ...state, createAt: dayjs().format("YYYY-MM-DD") }])
-    setState(Object.assign({}, initialState)) //reset
+    const result = { ...data, createAt: dayjs().format("YYYY-MM-DD") }
+    Record.set([...Record.get(), result])
+    addRecords([result])
+    dispatch({ type: "add", data: result })
+    setData(Object.assign({}, initState)) //reset
   }
   const map: MapType = { "+": "income", "-": "outcome" }
-  const { tags, classify } = useTag()
+  let { classify } = useTag()
   const selectTag = (selected: number[]) => {
     changeFunc({ selected })
   }
 
   // 当selected 改变时, showpad跟着改变
-  const n = 1
   useEffect(() => {
-    setShowPad(!!state.selected.length)
-  }, [state.selected])
+    setShowPad(!!data.selected.length)
+  }, [data.selected])
 
   useEffect(() => {
     // 输入框弹出时，让标签高度自适应
@@ -75,18 +80,18 @@ const Money: React.FC = () => {
       <CSSTransition appear in classNames="fade" timeout={200}>
         <main>
           <div className="category-wrapper" ref={categoryWrapper}>
-            <CategorySection category={state.category} onchange={(category) => changeFunc({ category })}></CategorySection>
+            <CategorySection category={data.category} onchange={(category) => changeFunc({ category })}></CategorySection>
           </div>
           <div className="tags-wrapper" ref={tagsWrapper}>
-            <TagsContainer tags={classify[map[state.category]]} parent="money" togglePad={selectTag} selected={state.selected}></TagsContainer>
+            <TagsContainer tags={classify[map[data.category]]} parent="money" togglePad={selectTag} selected={data.selected}></TagsContainer>
           </div>
         </main>
       </CSSTransition>
 
       {showPad && (
         <section className="bottom" ref={bottom} id="111">
-          <NoteSection note={state.note} onchange={(note) => changeFunc({ note })}></NoteSection>
-          <NumberPadSection output={state.output} onchange={(output) => changeFunc({ output })} onOk={submit}></NumberPadSection>
+          <NoteSection note={data.note} onchange={(note) => changeFunc({ note })}></NoteSection>
+          <NumberPadSection output={data.output} onchange={(output) => changeFunc({ output })} onOk={submit}></NumberPadSection>
         </section>
       )}
     </LayoutWrapper>

@@ -33,7 +33,7 @@ declare namespace myTypes {
     onchange: (tags: number[]) => void
   }
 
-  type RecordItem = { selected: number[]; note: string; category: Categories; output: string; createAt: string }
+  type RecordItem = { selected: number[]; note: string; category: Categories; output: string; createAt: string; id: number }
 
   interface RecordOrdersItem {
     [key: string]: myTypes.RecordItem[]
@@ -53,6 +53,13 @@ declare namespace myTypes {
   }
   type Rank = [string, myTypes.RecordItem[]]
   type WeekItem = [string, number, number]
+  type Store = {
+    newRecords: RecordItem[]
+  }
+  interface ActionType {
+    type: "add"
+    data: myTypes.RecordItem
+  }
 }
 
 //  declare type CascaderOneValue = string | number;

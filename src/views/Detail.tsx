@@ -5,9 +5,10 @@ import { useTag } from "@/hooks/useTag"
 import { DatePickerView } from "antd-mobile"
 import Layout from "components/layout/Layout"
 import dayjs from "dayjs"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, memo, useContext, useRef, useMemo } from "react"
 import styled from "styled-components"
 import Icon from "@/components/icon/Icon"
+import { Context } from "@/common/ts/context"
 
 const LayoutWrapper = styled.div`
   .category-wrapper {
@@ -120,12 +121,13 @@ interface RecordsType {
   income: number
   outcome: number
 }
-const Detail: React.FC = () => {
+const Detail: React.FC = memo(() => {
+  const { allRecords, dispatch } = useContext(Context)
   const [date, setDate] = useState<Date>(new Date())
   const [showPicker, setShowPicker] = useState(false)
   const { findTagId, tags } = useTag()
-  const getRecords = (date: Date) => recordsRankByMonth(Record.get(), date)
-  const [records, setRecords] = useState<RecordsType>(getRecords(date))
+  const getRecords = (data: myTypes.RecordItem[], date: Date) => recordsRankByMonth(data, date)
+  const [records, setRecords] = useState<RecordsType>(getRecords([], date))
   const [rank, setRank] = useState<ReturnType<typeof orderByDate>>([])
   const [total, setTotal] = useState<Pick<RecordsType, "income" | "outcome">>({ income: 0, outcome: 0 })
   const getDay = (day: string) => {
@@ -140,7 +142,7 @@ const Detail: React.FC = () => {
     return map[day]
   }
   const onChange = (value: Date) => {
-    const { rank, income, outcome } = getRecords(value) //数据随时间选择器改变
+    const { rank, income, outcome } = getRecords(allRecords, value) //数据随时间选择器改变
     setRecords({ rank, income, outcome })
     setDate(value)
   }
@@ -158,6 +160,10 @@ const Detail: React.FC = () => {
     setRank(rank)
     setTotal({ income, outcome })
   }, [records])
+
+  useEffect(() => {
+    setRecords(getRecords(allRecords, date))
+  }, [allRecords])
 
   return (
     <LayoutWrapper>
@@ -231,6 +237,5 @@ const Detail: React.FC = () => {
       </Layout>
     </LayoutWrapper>
   )
-}
-
+})
 export default Detail

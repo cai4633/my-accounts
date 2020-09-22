@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import styled from "styled-components"
 import Layout from "@/components/layout/Layout"
 import dayjs from "dayjs"
@@ -7,6 +7,7 @@ import Icon from "components/icon/Icon"
 import { getDataToday } from "common/ts/detail"
 import { useTag } from "@/hooks/useTag"
 import { Record } from "@/common/ts/cache"
+import { Context } from "@/common/ts/context"
 const Wrapper = styled.div`
   background-color: ${theme.backgroundWhite};
   .layout {
@@ -80,9 +81,10 @@ const Wrapper = styled.div`
 `
 interface Props {}
 const Home = (props: Props) => {
+  const { allRecords } = useContext(Context)
   const today = dayjs().format("YYYY年MM月DD日")
   const { findTagId, tags } = useTag()
-  const data = getDataToday(Record.get())
+  const data = getDataToday(allRecords)
   return (
     <Wrapper className="home">
       <Layout className="layout">

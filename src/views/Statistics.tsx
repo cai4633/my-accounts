@@ -1,12 +1,13 @@
-import { Record } from "@/common/ts/cache"
+import { Context } from "@/common/ts/context"
 import { getDataThisMonth, getDataThisWeek, getDataThisYear } from "@/common/ts/detail"
 import { theme } from "@/common/ts/variable"
 import Picker from "@/components/picker/Picker"
 import Tabs from "@/components/tabs/Tabs"
+import { useRecord } from "@/hooks/useRecord"
 import { getTotal } from "common/ts/statistics"
 import Layout from "components/layout/Layout"
 import echarts from "echarts"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 
 const paddingLeft = "20px"
@@ -35,15 +36,15 @@ const LayoutWrapper = styled.div`
       margin: 0px 5px;
     }
   }
-
 `
-const Detail: React.FC = () => {
+const Statistics: React.FC = () => {
   const set = ["本周", "本月", "今年"] as const
   const [index, setIndex] = useState(0) //切换年月周
   const [title, setTitle] = useState("周")
+  const { allRecords } = useContext(Context)
   const [node, setNode] = useState<HTMLDivElement>()
   const [chart, setChart] = useState<echarts.ECharts>()
-  const [total, setTotal] = useState<myTypes.AccountType>(getTotal(getDataThisWeek(Record.get())))
+  const [total, setTotal] = useState<myTypes.AccountType>(getTotal(getDataThisWeek(allRecords)))
   // 第一次mounted
   useEffect(() => {
     setNode(document.getElementById("chart") as HTMLDivElement)
@@ -65,22 +66,22 @@ const Detail: React.FC = () => {
         },
         xAxis: { type: "category" },
         dataset: {
-          source: getDataThisWeek(Record.get()),
+          source: getDataThisWeek(allRecords),
         },
         series: [
           {
-            name: "收入",
+            name: "支出",
             type: "line",
             dimensions: ["date", "income", "outcome"],
             encode: {
               x: 0,
-              y: 1,
+              y: 2,
             },
           },
         ],
       })
     }
-  }, [node])
+  }, [node, allRecords])
 
   const setOptionSource = (data: myTypes.WeekItem[]) => {
     chart?.setOption({
@@ -94,22 +95,22 @@ const Detail: React.FC = () => {
     const selectValue = e.nativeEvent.value
     switch (selectIndex) {
       case 0:
-        const source0 = getDataThisWeek(Record.get())
+        const source0 = getDataThisWeek(allRecords)
         setTotal(getTotal(source0))
         setOptionSource(source0)
         break
       case 1:
-        const source1 = getDataThisMonth(Record.get())
+        const source1 = getDataThisMonth(allRecords)
         setTotal(getTotal(source1))
         setOptionSource(source1)
         break
       case 2:
-        const source2 = getDataThisYear(Record.get())
+        const source2 = getDataThisYear(allRecords)
         setTotal(getTotal(source2))
         setOptionSource(source2)
         break
       default:
-        const source3 = getDataThisWeek(Record.get())
+        const source3 = getDataThisWeek(allRecords)
         setTotal(getTotal(source3))
         setOptionSource(source3)
         break
@@ -146,4 +147,4 @@ const Detail: React.FC = () => {
   )
 }
 
-export default Detail
+export default Statistics

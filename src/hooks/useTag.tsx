@@ -1,5 +1,6 @@
+import { getAllTags } from "@/api/tags"
 import { useState, useEffect } from "react"
-import { createTagId, getComplementarySet, getIds } from "../common/ts/util"
+import { getComplementarySet, getIds } from "../common/ts/util"
 
 interface Classify<T = myTypes.TagItem> {
   income: T[]
@@ -7,47 +8,35 @@ interface Classify<T = myTypes.TagItem> {
 }
 
 const __TAGS__ = "tags"
-const allTags: myTypes.TagItem[] = [
-  { id: createTagId(), name: "服饰", category: "-", icon: "clothes" },
-  { id: createTagId(), name: "餐饮", category: "-", icon: "food" },
-  { id: createTagId(), name: "住房", category: "-", icon: "house" },
-  { id: createTagId(), name: "交通", category: "-", icon: "traffic" },
-  { id: createTagId(), name: "购物", category: "-", icon: "shopping" },
-  { id: createTagId(), name: "旅游", category: "-", icon: "trip" },
-  { id: createTagId(), name: "日用品", category: "-", icon: "commodity" },
-  { id: createTagId(), name: "零食", category: "-", icon: "snack" },
-  { id: createTagId(), name: "运动", category: "-", icon: "sport" },
-  { id: createTagId(), name: "长辈", category: "-", icon: "parents" },
-  { id: createTagId(), name: "孩子", category: "-", icon: "children" },
-  { id: createTagId(), name: "社交", category: "-", icon: "communication" },
-  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
-  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
-  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
-  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
-  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
-  { id: createTagId(), name: "数码", category: "-", icon: "digital" },
-  { id: createTagId(), name: "通讯", category: "-", icon: "message" },
-  { id: createTagId(), name: "烟酒", category: "-", icon: "wine" },
-  { id: createTagId(), name: "工资", category: "+", icon: "salary" },
-  { id: createTagId(), name: "兼职", category: "+", icon: "ptjob" },
-  { id: createTagId(), name: "理财", category: "+", icon: "financing" },
-  { id: createTagId(), name: "礼金", category: "+", icon: "gift" },
-  { id: createTagId(), name: "其它", category: "-", icon: "other" },
-  { id: createTagId(), name: "其它", category: "+", icon: "other" },
-]
+const allTags: myTypes.TagItem[] = []
+const promise: Promise<myTypes.TagItem[]> = getAllTags().then((tags) => {
+  allTags.push(...tags)
+  return tags
+})
+
 function useTag() {
-  const defaultTags = JSON.parse(localStorage.getItem(__TAGS__) || JSON.stringify(allTags.slice(0)))
+  const [defaultTags, setDefaultTags] = useState(JSON.parse(localStorage.getItem(__TAGS__) || "[]"))
   const [tags, setTags] = useState<myTypes.TagItem[]>(defaultTags)
   const [restTags, setRestTags] = useState<myTypes.TagItem[]>([])
   const [classify, setClassify] = useState<Classify>({ income: [], outcome: [] })
   const [checktags, setChecktags] = useState<number[]>([])
-
   useEffect(() => {
     const rest = getComplementarySet<number>(getIds(tags), getIds(allTags))
     setClassify(classifyByCategory(tags))
     localStorage.setItem(__TAGS__, JSON.stringify(tags))
     setRestTags(findTags(rest))
   }, [tags])
+  useEffect(() => {
+    promise.then(() => {
+      if (!defaultTags.length) {
+        setDefaultTags(allTags.slice())
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    setTags(defaultTags)
+  }, [defaultTags])
 
   // 根据category将将标签分类
   function classifyByCategory<T extends { category: myTypes.Categories }>(tags: T[]) {
@@ -99,4 +88,5 @@ function useTag() {
 
   return { tags, setTags, updateTag, findTagId, deleteTag, addTag, allTags, checktags, setChecktags, restTags, classify }
 }
+
 export { useTag }
