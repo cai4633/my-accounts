@@ -6,27 +6,48 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  display: flex;
+  justify-content: center;
   text-align: center;
-  /* background-color: #e5e5e5; */
-  main {
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    max-height: calc(100vh - 48px);
-    overflow: auto;
+  padding-bottom: 75px;
+  box-sizing: border-box;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  .container {
+    height: 100%;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+    main {
+      box-sizing: border-box;
+      min-height: 100%;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+      &::after {
+        content: "";
+        display: block;
+        padding-bottom: 70px;
+      }
+    }
+    .nav-wrapper {
+      position: fixed;
+      z-index: 1000;
+      width: 100%;
+      bottom: 0px;
+    }
   }
-`
-
-const Main = styled.main`
-  flex: 1;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
 `
 
 function Layout(prop: any) {
   return (
-    <Wrapper>
-      <Main className={prop.className}>{prop.children}</Main>
-      <Nav></Nav>
+    <Wrapper className="layout">
+      <div className="container">
+        <main className={prop.className}>{prop.children}</main>
+        <div className="nav-wrapper">
+          <Nav></Nav>
+        </div>
+      </div>
     </Wrapper>
   )
 }
