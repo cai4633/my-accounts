@@ -9,6 +9,7 @@ import { useTag } from "@/hooks/useTag"
 import { Context } from "@/common/ts/context"
 const Wrapper = styled.div`
   background-color: ${theme.backgroundWhite};
+  height: 100%;
   .layout {
     header {
       color: ${theme.color};
