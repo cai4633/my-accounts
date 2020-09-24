@@ -42,5 +42,4 @@ const App: React.FC = () => {
     </Context.Provider>
   )
 }
-
 export default App

@@ -5,11 +5,16 @@ type Prop = { note: string; onchange: (note: string) => void; placeholder?: stri
 const NoteWrapper = styled.section`
   text-align: left;
   background-color: #f5f5f5;
-  padding: 1em 10px;
-  line-height: 2em;
+  padding: 0 10px;
+  display: flex;  
+  span {
+    padding: 1em 0;
+  }
   input {
+    padding: 1em 0;
     margin-left: 16px;
     color: #333;
+    flex: 1;
   }
 `
 const NoteSection: React.FC<Prop> = (prop) => {

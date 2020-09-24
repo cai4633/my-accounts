@@ -9,6 +9,7 @@ const NumberPadWrapper = styled.section`
   .output {
     width: 100%;
     input {
+      pointer-events: none;
       font-size: 26px;
       text-align: right;
       width: 100%;

@@ -1,34 +1,23 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import Nav from "components/nav/Nav"
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   text-align: center;
-  padding-bottom: 75px;
-  box-sizing: border-box;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
   .container {
     height: 100%;
-    box-sizing: border-box;
-    -webkit-overflow-scrolling: touch;
     main {
-      box-sizing: border-box;
       min-height: 100%;
+      padding-bottom: 55px;
       text-align: left;
       display: flex;
       flex-direction: column;
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
-      &::after {
-        content: "";
-        display: block;
-        padding-bottom: 70px;
-      }
     }
     .nav-wrapper {
       position: fixed;
@@ -40,6 +29,9 @@ const Wrapper = styled.div`
 `
 
 function Layout(prop: any) {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <Wrapper className="layout">
       <div className="container">

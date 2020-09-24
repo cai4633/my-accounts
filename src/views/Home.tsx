@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { FC, useContext, useEffect } from "react"
 import styled from "styled-components"
 import Layout from "@/components/layout/Layout"
 import dayjs from "dayjs"
@@ -32,6 +32,8 @@ const Wrapper = styled.div`
     }
     .current {
       padding: 1.5em 0;
+      flex: 1;
+      overflow: auto;
       h2 {
         padding: 0 1em;
         font-size: 1rem;
@@ -79,11 +81,12 @@ const Wrapper = styled.div`
   }
 `
 interface Props {}
-const Home = (props: Props) => {
+const Home: FC = (props: Props) => {
   const { allRecords } = useContext(Context)
   const today = dayjs().format("YYYY年MM月DD日")
   const { findTagId, tags } = useTag()
   const data = getDataToday(allRecords)
+
   return (
     <Wrapper className="home">
       <Layout className="layout">

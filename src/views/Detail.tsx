@@ -11,6 +11,7 @@ import { Context } from "@/common/ts/context"
 
 const LayoutWrapper = styled.div`
   position: relative;
+  height: 100%;
   .category-wrapper {
     color: ${theme.color};
     text-align: center;
@@ -71,8 +72,6 @@ const LayoutWrapper = styled.div`
   }
 
   .content-wrapper {
-    overflow: auto;
-
     .content {
       margin-top: 1em;
       &:nth-child(1) {
