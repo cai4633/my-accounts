@@ -6,9 +6,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  display: flex;
   justify-content: center;
   text-align: center;
+  position: relative;
   .container {
     height: 100%;
     main {
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
     }
     .nav-wrapper {
-      position: fixed;
+      position: absolute;
       z-index: 1000;
       width: 100%;
       bottom: 0px;

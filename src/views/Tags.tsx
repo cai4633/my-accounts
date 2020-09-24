@@ -11,6 +11,7 @@ interface MapType {
 
 const LayoutWrapper = styled.div`
   background-color: #e5e5e5;
+  height: 100%;
   main {
     .tags-wrapper {
       overflow: auto;

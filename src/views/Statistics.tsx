@@ -11,7 +11,7 @@ import styled from "styled-components"
 
 const paddingLeft = "20px"
 const LayoutWrapper = styled.div`
-  position: relative;
+  height: 100%;
   .header {
     background-color: ${theme.backgroundColor};
     padding-bottom: 15px;
@@ -130,8 +130,8 @@ const Statistics: React.FC = () => {
     })
   }
   return (
-    <LayoutWrapper>
-      <Layout className="statistics">
+    <LayoutWrapper className="statistics">
+      <Layout>
         <div className="header">
           <Picker onChange={pickerChange}></Picker>
           <Tabs onChange={onChange} index={index}></Tabs>

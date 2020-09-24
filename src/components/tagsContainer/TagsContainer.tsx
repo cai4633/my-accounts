@@ -17,10 +17,15 @@ interface Props {
 
 const TagsWrapper = styled.div`
   background-color: #fff;
+  padding: 0 20px;
   & > ol {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
+    &::after {
+      content: "";
+      flex: 1;
+    }
     li {
       font-size: 12px;
       margin: 10px 15px;
@@ -43,6 +48,7 @@ const TagsWrapper = styled.div`
           border: 1px solid transparent;
         }
       }
+
       .checked {
         svg.icon {
           border: 1px solid red;
@@ -115,11 +121,12 @@ const TagsContainer: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <TagsWrapper>
+      <TagsWrapper className="tags-container">
         <ol>
-          { tags && tags.map((tag: myTypes.TagItem) => {
-            return addBtn ? navLink(tag) : add(tag)
-          })}
+          {tags &&
+            tags.map((tag: myTypes.TagItem) => {
+              return addBtn ? navLink(tag) : add(tag)
+            })}
 
           {addBtn && (
             <li>
