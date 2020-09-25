@@ -17,7 +17,6 @@ interface Props {
 
 const TagsWrapper = styled.div`
   background-color: #fff;
-  padding: 0 10px;
   & > ol {
     display: flex;
     flex-wrap: wrap;
@@ -26,12 +25,13 @@ const TagsWrapper = styled.div`
     li {
       font-size: 12px;
       margin: 10px 15px;
-      /* box-shadow: inset 0px -0.5px 0px #bcbbc1; */
       border: 1px solid transparent;
       &.empty {
         width: 3rem;
         height: 0;
         margin: 0 16px;
+        border: none;
+        
       }
       a,
       .item {

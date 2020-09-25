@@ -17,7 +17,6 @@ const Wrapper = styled.div`
       text-align: left;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
     }
     .nav-wrapper {
       position: fixed;
