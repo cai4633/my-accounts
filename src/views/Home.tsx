@@ -86,7 +86,6 @@ interface Props {}
 const Home: FC = (props: Props) => {
   const { allRecords } = useContext(Context)
   const today = dayjs().format("YYYY年MM月DD日")
-  const { findTags, tags } = useTag()
   const data = getDataToday(allRecords)
 
   return (
@@ -103,11 +102,11 @@ const Home: FC = (props: Props) => {
           </h2>
           <div className="content">
             <ul className="today">
-              {data.records.map((item, index) => {
+              {data.records.map((item) => {
                 return (
-                  <li key={index}>
+                  <li key={item.id}>
                     {item.selected.map((id) => (
-                      <RecordListItem id={id}></RecordListItem>
+                      <RecordListItem id={id} key={`${item.id}${id}`}></RecordListItem>
                     ))}
                     <span className="note no-wrap">{item.note}</span>
                     <span className="amount">

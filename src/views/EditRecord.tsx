@@ -36,18 +36,20 @@ type Prop = {
   placeholder?: string
   btnBackground?: string
 }
-type Params = { tagId: string }
+type Params = { recordId: string }
 
 const EditRecord: React.FC<Prop> = (prop) => {
   const history = useHistory()
   const { tags, findTagId, updateTag, deleteTag } = useTag()
-  const { tagId: id } = useParams<Params>()
-  const tagid = findTagId(window.parseInt(id))
+  const { recordId } = useParams<Params>()
+  console.log(recordId)
+
+  const tagid = findTagId(window.parseInt(recordId))
   const tagMap = {
     title: "编辑标签",
     value: "删除标签",
     clickHandle: () => {
-      deleteTag(window.parseInt(id))
+      deleteTag(window.parseInt(recordId))
     },
   }
   const tagName = tagid >= 0 ? tags[tagid].name : ""
@@ -60,10 +62,10 @@ const EditRecord: React.FC<Prop> = (prop) => {
   }
   return (
     <MyLayout className="tag">
-      <MHeader onOk={onOk}>编辑标签</MHeader>
-      <main>{tagid === -1 ? "标签不存在或者已删除" : Note}</main>
+      <MHeader onOk={onOk}>编辑账单</MHeader>
+      <main>{tagid === -1 ? <span>账单不存在或者已删除</span> : Note}</main>
       <div className="button-wrapper">
-        <Button title={tagMap.value}  onClick={tagMap.clickHandle}></Button>
+        <Button title={tagMap.value} onClick={tagMap.clickHandle}></Button>
       </div>
     </MyLayout>
   )

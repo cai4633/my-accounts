@@ -1,17 +1,16 @@
 const TAGID = "tagid"
 let tagid = -1
-let recordId = -1
 function createTagId() {
   tagid++
   return tagid
 }
 
-function createRecordId(lastId?: number) {
-  if (lastId !== undefined) {
-    recordId = lastId
+// 如果服务器拉取的记录为空就取随机数，否则length+1
+function createRecordId(allRecords?: myTypes.RecordItem[]) {
+  if (!allRecords || !allRecords.length) {
+    return (Math.random() * 100000000) | 0 //2^31
   }
-  recordId++
-  return 1000 + recordId
+  return 1000001 + allRecords.length 
 }
 
 function getComplementarySet<T>(subset: T[], array: T[]): T[] {

@@ -213,12 +213,12 @@ const Detail: React.FC = memo(() => {
                   </div>
                 </h2>
                 <ul className="detail">
-                  {item[1].map((item, index) => {
+                  {item[1].map((item: myTypes.RecordItem, index) => {
                     return (
-                      <li key={index + 10000}>
+                      <li key={item.id}>
                         <NavLink to={`/editRecord/${item.id}`}>
                           {item.selected.map((id) => (
-                            <RecordListItem id={id}></RecordListItem>
+                            <RecordListItem id={id} key={`${item.id}${id}`}></RecordListItem>
                           ))}
                           <span className="note no-wrap">{item.note}</span>
                           <span className="amount">

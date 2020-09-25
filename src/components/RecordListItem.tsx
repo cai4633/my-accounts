@@ -10,7 +10,7 @@ const RecordListItem = (props: Props) => {
   const { findTags } = useTag()
   const { id } = props
   return (
-    <span className="tag" key={id}>
+    <span className="tag">
       <Icon name={findTags([id])[0]?.icon}></Icon>
       <span className="text">{findTags([id])[0]?.name}</span>
     </span>

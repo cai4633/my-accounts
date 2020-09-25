@@ -13,6 +13,7 @@ import styled from "styled-components"
 import NoteSection from "./edit/NoteSection"
 import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
 import { Toast } from "antd-mobile"
+import { createRecordId } from "common/ts/util"
 interface MapType {
   [key: string]: "income" | "outcome"
 }
@@ -42,6 +43,7 @@ const LayoutWrapper = styled.div`
 `
 
 const Money: React.FC = () => {
+  const { allRecords } = useContext(Context)
   const initState: myTypes.MoneyState = { selected: [], note: "", category: "-", output: "0", id: 0 }
   const [data, setData] = useState<myTypes.MoneyState>(initState)
   const [showPad, setShowPad] = useState(false)
@@ -60,7 +62,7 @@ const Money: React.FC = () => {
       Toast.info("您还未输入金额", 2)
       return
     }
-    const result = { ...data, createAt: dayjs().format("YYYY-MM-DD") }
+    const result = { ...data, createAt: dayjs().format("YYYY-MM-DD"), id: createRecordId(allRecords) }
     Record.set([...Record.get(), result])
     addRecords([result])
     dispatch({ type: "add", data: result })
@@ -99,7 +101,7 @@ const Money: React.FC = () => {
       </CSSTransition>
 
       {showPad && (
-        <section className="bottom" ref={bottom} id="111">
+        <section className="bottom" ref={bottom}>
           <NoteSection note={data.note} onchange={(note) => changeFunc({ note })}></NoteSection>
           <NumberPadSection output={data.output} onchange={(output) => changeFunc({ output })} onOk={submit}></NumberPadSection>
         </section>
