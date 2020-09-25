@@ -7,6 +7,7 @@ import Icon from "components/icon/Icon"
 import { getDataToday } from "common/ts/detail"
 import { useTag } from "@/hooks/useTag"
 import { Context } from "@/common/ts/context"
+import RecordListItem from "@/components/RecordListItem"
 const Wrapper = styled.div`
   background-color: ${theme.backgroundWhite};
   height: 100%;
@@ -85,7 +86,7 @@ interface Props {}
 const Home: FC = (props: Props) => {
   const { allRecords } = useContext(Context)
   const today = dayjs().format("YYYY年MM月DD日")
-  const { findTagId, tags } = useTag()
+  const { findTags, tags } = useTag()
   const data = getDataToday(allRecords)
 
   return (
@@ -105,14 +106,9 @@ const Home: FC = (props: Props) => {
               {data.records.map((item, index) => {
                 return (
                   <li key={index}>
-                    {item.selected.map((id) => {
-                      return (
-                        <span className="tag" key={id}>
-                          <Icon name={tags[findTagId(id)]?.icon}></Icon>
-                          <span className="text">{tags[findTagId(id)]?.name}</span>
-                        </span>
-                      )
-                    })}
+                    {item.selected.map((id) => (
+                      <RecordListItem id={id}></RecordListItem>
+                    ))}
                     <span className="note no-wrap">{item.note}</span>
                     <span className="amount">
                       {item.category}

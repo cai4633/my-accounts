@@ -12,6 +12,7 @@ import "./App.less"
 import { Context } from "./common/ts/context"
 import { reducer } from "reducers/reducer"
 import { useRecord } from "./hooks/useRecord"
+import EditRecord from "./views/EditRecord"
 
 const store: myTypes.Store = {
   newRecords: [],
@@ -34,6 +35,7 @@ const App: React.FC = () => {
           <Route exact path="/tags/:tagId" component={EditTag} />
           <Route exact path="/addTags" component={AddTags} />
           <Route exact path="/detail" component={Detail}></Route>
+          <Route exact path="/editRecord/:recordId" component={EditRecord}></Route>
           <Route exact path="/money" component={Money} />
           <Route exact path="/statistics" component={Statistics} />
           <Route path="*" component={NoMatch} />

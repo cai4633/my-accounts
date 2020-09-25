@@ -19,7 +19,6 @@ interface MapType {
 
 const LayoutWrapper = styled.div`
   background-color: #e5e5e5;
-  /* position: relative; */
   height: 100vh;
   overflow: auto;
   main {

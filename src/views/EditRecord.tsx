@@ -12,9 +12,6 @@ const MyLayout = styled(Layout)`
   position: relative;
   main {
     margin-top: 8px;
-    & > span.noTag {
-      padding-left: 20px;
-    }
     section {
       padding: 6px 18px;
       background-color: #fff;
@@ -41,7 +38,7 @@ type Prop = {
 }
 type Params = { tagId: string }
 
-const Tag: React.FC<Prop> = (prop) => {
+const EditRecord: React.FC<Prop> = (prop) => {
   const history = useHistory()
   const { tags, findTagId, updateTag, deleteTag } = useTag()
   const { tagId: id } = useParams<Params>()
@@ -64,12 +61,12 @@ const Tag: React.FC<Prop> = (prop) => {
   return (
     <MyLayout className="tag">
       <MHeader onOk={onOk}>编辑标签</MHeader>
-      <main>{tagid === -1 ? <span className="noTag">标签不存在或者已删除</span> : Note}</main>
+      <main>{tagid === -1 ? "标签不存在或者已删除" : Note}</main>
       <div className="button-wrapper">
-        <Button title={tagMap.value} onClick={tagMap.clickHandle}></Button>
+        <Button title={tagMap.value}  onClick={tagMap.clickHandle}></Button>
       </div>
     </MyLayout>
   )
 }
 
-export default Tag
+export default EditRecord

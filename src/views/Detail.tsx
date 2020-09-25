@@ -8,6 +8,8 @@ import React, { useState, useEffect, memo, useContext, useRef, useMemo } from "r
 import styled from "styled-components"
 import Icon from "@/components/icon/Icon"
 import { Context } from "@/common/ts/context"
+import { NavLink } from "react-router-dom"
+import RecordListItem from "@/components/RecordListItem"
 
 const LayoutWrapper = styled.div`
   position: relative;
@@ -92,22 +94,24 @@ const LayoutWrapper = styled.div`
       .detail {
         padding: 0 18px;
         li {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          font-size: 16px;
-          line-height: 22px;
-          padding: 9px 0px;
-          .tag > .text {
-            margin-left: 10px;
-          }
-          .note {
-            flex: 1;
-            margin: 0 10px;
-            color: ${theme.text_color_darker};
-            font-size: 14px;
-            text-align: left;
-            ${mixin.noWrap}
+          a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            line-height: 22px;
+            padding: 9px 0px;
+            .tag > .text {
+              margin-left: 10px;
+            }
+            .note {
+              flex: 1;
+              margin: 0 10px;
+              color: ${theme.text_color_darker};
+              font-size: 14px;
+              text-align: left;
+              ${mixin.noWrap}
+            }
           }
         }
       }
@@ -124,7 +128,7 @@ const Detail: React.FC = memo(() => {
   const { allRecords, dispatch } = useContext(Context)
   const [date, setDate] = useState<Date>(new Date())
   const [showPicker, setShowPicker] = useState(false)
-  const { findTagId, tags } = useTag()
+  const { findTagId, tags, findTags } = useTag()
   const getRecords = (data: myTypes.RecordItem[], date: Date) => recordsRankByMonth(data, date)
   const [records, setRecords] = useState<RecordsType>(getRecords([], date))
   const [rank, setRank] = useState<ReturnType<typeof orderByDate>>([])
@@ -212,19 +216,16 @@ const Detail: React.FC = memo(() => {
                   {item[1].map((item, index) => {
                     return (
                       <li key={index + 10000}>
-                        {item.selected.map((id) => {
-                          return (
-                            <span className="tag" key={id}>
-                              <Icon name={tags[findTagId(id)]?.icon}></Icon>
-                              <span className="text">{tags[findTagId(id)]?.name}</span>
-                            </span>
-                          )
-                        })}
-                        <span className="note no-wrap">{item.note}</span>
-                        <span className="amount">
-                          {item.category}
-                          {item.output}
-                        </span>
+                        <NavLink to={`/editRecord/${item.id}`}>
+                          {item.selected.map((id) => (
+                            <RecordListItem id={id}></RecordListItem>
+                          ))}
+                          <span className="note no-wrap">{item.note}</span>
+                          <span className="amount">
+                            {item.category}
+                            {item.output}
+                          </span>
+                        </NavLink>
                       </li>
                     )
                   })}

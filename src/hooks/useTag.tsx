@@ -21,18 +21,19 @@ function useTag() {
   const [classify, setClassify] = useState<Classify>({ income: [], outcome: [] })
   const [checktags, setChecktags] = useState<number[]>([])
   useEffect(() => {
-    const rest = getComplementarySet<number>(getIds(tags), getIds(allTags))
-    setClassify(classifyByCategory(tags))
-    localStorage.setItem(__TAGS__, JSON.stringify(tags))
-    setRestTags(findTags(rest))
-  }, [tags])
-  useEffect(() => {
     promise.then(() => {
       if (!defaultTags.length) {
         setDefaultTags(allTags.slice())
       }
     })
   }, [])
+
+  useEffect(() => {
+    const rest = getComplementarySet<number>(getIds(tags), getIds(allTags))
+    setClassify(classifyByCategory(tags))
+    localStorage.setItem(__TAGS__, JSON.stringify(tags))
+    setRestTags(findTags(rest))
+  }, [tags])
 
   useEffect(() => {
     setTags(defaultTags)
@@ -53,8 +54,8 @@ function useTag() {
   }
 
   // 获取标签id
-  const findTagId = (id: number) => {
-    return tags.findIndex((item) => item.id === id)
+  const findTagId = (id: number, someTags: myTypes.TagItem[] = tags) => {
+    return someTags.findIndex((item) => item.id === id)
   }
   // 根据id 获取标签
   const findTags = (ids: number[]): myTypes.TagItem[] => {
@@ -86,7 +87,7 @@ function useTag() {
     setTags([...tags, ...findTags(val)])
   }
 
-  return { tags, setTags, updateTag, findTagId, deleteTag, addTag, allTags, checktags, setChecktags, restTags, classify }
+  return { tags, setTags, updateTag, findTagId, deleteTag, addTag, allTags, checktags, setChecktags, restTags, classify, findTags }
 }
 
 export { useTag }
