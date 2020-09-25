@@ -1,5 +1,6 @@
 import { Record } from "@/common/ts/cache"
 import { Context } from "@/common/ts/context"
+import { theme } from "@/common/ts/variable"
 import TagsContainer from "@/components/tagsContainer/TagsContainer"
 import { useTag } from "@/hooks/useTag"
 import { addRecords } from "api/records"
@@ -11,6 +12,7 @@ import { CSSTransition } from "react-transition-group"
 import styled from "styled-components"
 import NoteSection from "./edit/NoteSection"
 import NumberPadSection from "./edit/numberPadSection/NumberPadSection"
+import { Toast } from "antd-mobile"
 interface MapType {
   [key: string]: "income" | "outcome"
 }
@@ -33,10 +35,10 @@ const LayoutWrapper = styled.div`
     }
   }
   section.bottom {
-    position: absolute;
+    position: fixed;
     width: 100%;
     bottom: 0;
-    left: 0;
+    max-width: ${theme.maxWidth};
   }
 `
 
@@ -52,7 +54,13 @@ const Money: React.FC = () => {
   const changeFunc = (obj: Partial<myTypes.MoneyState>) => {
     setData({ ...data, ...obj })
   }
+
+  // ok 按钮提交功能
   const submit = () => {
+    if (parseFloat(data.output) === 0) {
+      Toast.info("您还未输入金额", 2)
+      return
+    }
     const result = { ...data, createAt: dayjs().format("YYYY-MM-DD") }
     Record.set([...Record.get(), result])
     addRecords([result])
