@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
 import Nav from "components/nav/Nav"
-
+import {theme} from 'common/ts/variable'
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,9 +20,10 @@ const Wrapper = styled.div`
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
     }
     .nav-wrapper {
-      position: absolute;
+      position: fixed;
       z-index: 1000;
       width: 100%;
+      max-width: ${theme.maxWidth};
       bottom: 0px;
     }
   }

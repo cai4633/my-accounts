@@ -17,20 +17,22 @@ interface Props {
 
 const TagsWrapper = styled.div`
   background-color: #fff;
-  padding: 0 20px;
+  padding: 0 10px;
   & > ol {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    &::after {
-      content: "";
-      flex: 1;
-    }
+
     li {
       font-size: 12px;
       margin: 10px 15px;
       /* box-shadow: inset 0px -0.5px 0px #bcbbc1; */
       border: 1px solid transparent;
+      &.empty {
+        width: 3rem;
+        height: 0;
+        margin: 0 16px;
+      }
       a,
       .item {
         display: flex;
@@ -118,16 +120,21 @@ const TagsContainer: React.FC<Props> = (props) => {
       </li>
     )
   }
+  const empty: number[] = []
+  for (let i = 1; i <= 8; i++) {
+    empty.push(i)
+  }
 
   return (
     <div>
       <TagsWrapper className="tags-container">
         <ol>
+          {/* 各种标签 */}
           {tags &&
             tags.map((tag: myTypes.TagItem) => {
               return addBtn ? navLink(tag) : add(tag)
             })}
-
+          {/* 添加按钮 */}
           {addBtn && (
             <li>
               <NavLink to="/addTags">
@@ -136,6 +143,10 @@ const TagsContainer: React.FC<Props> = (props) => {
               </NavLink>
             </li>
           )}
+          {/* 妥协布局，添加空元素 */}
+          {empty.map((item) => (
+            <li className="empty" key={item}></li>
+          ))}
         </ol>
       </TagsWrapper>
     </div>

@@ -1,7 +1,7 @@
 @import "./variable.less";
 
 @timeout: 200ms;
-
+@max-width: 768px;
 html {
   font-size: 16px;
   width: 100%;
@@ -17,7 +17,8 @@ body {
   font-size: 14px;
   #root {
     margin: 0 auto;
-    max-width: 768px;
+    max-width: @max-width;
+    min-width: 265px;
     height: 100%;
   }
 }

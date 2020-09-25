@@ -2,6 +2,7 @@ const theme = {
   backgroundColor: "#06c",
   backgroundWhite: "#eee",
   // backgroundColor: "#ffda47",
+  maxWidth: "768px",
   color: "#fff",
   text_color_grey: "#777",
   text_color_darker: "#aaa",
