@@ -41,7 +41,9 @@ const Statistics: React.FC = () => {
   const set = ["本周", "本月", "今年"] as const
   const [index, setIndex] = useState(0) //切换年月周
   const [title, setTitle] = useState("周")
-  const { allRecords } = useContext(Context)
+  const {
+    state: { allRecords },
+  } = useContext(Context)
   const [node, setNode] = useState<HTMLDivElement>()
   const [chart, setChart] = useState<echarts.ECharts>()
   const [total, setTotal] = useState<myTypes.AccountType>(getTotal(getDataThisWeek(allRecords)))

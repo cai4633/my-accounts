@@ -55,10 +55,12 @@ declare namespace myTypes {
   type WeekItem = [string, number, number]
   type Store = {
     newRecords: RecordItem[]
+    allRecords: RecordItem[]
   }
+
   interface ActionType {
-    type: "add"
-    data: myTypes.RecordItem
+    type: "addNew" | "updateAll" | "addAll"
+    data: myTypes.RecordItem | myTypes.RecordItem[]
   }
 }
 

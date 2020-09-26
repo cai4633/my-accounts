@@ -84,7 +84,9 @@ const Wrapper = styled.div`
 `
 interface Props {}
 const Home: FC = (props: Props) => {
-  const { allRecords } = useContext(Context)
+  const {
+    state: { allRecords },
+  } = useContext(Context)
   const today = dayjs().format("YYYY年MM月DD日")
   const data = getDataToday(allRecords)
 

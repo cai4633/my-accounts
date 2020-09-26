@@ -125,7 +125,10 @@ interface RecordsType {
   outcome: number
 }
 const Detail: React.FC = memo(() => {
-  const { allRecords, dispatch } = useContext(Context)
+  const {
+    state: { allRecords },
+    dispatch,
+  } = useContext(Context)
   const [date, setDate] = useState<Date>(new Date())
   const [showPicker, setShowPicker] = useState(false)
   const { findTagId, tags, findTags } = useTag()

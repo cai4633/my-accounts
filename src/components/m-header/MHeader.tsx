@@ -12,6 +12,7 @@ interface Props {
 const Header = styled.header`
   text-align: center;
   background-color: ${theme.backgroundColor};
+  color: #fff;
   h1 {
     display: flex;
     justify-content: space-between;

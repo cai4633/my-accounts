@@ -43,7 +43,7 @@ const LayoutWrapper = styled.div`
 `
 
 const Money: React.FC = () => {
-  const { allRecords } = useContext(Context)
+  const { state: { allRecords } } = useContext(Context)
   const initState: myTypes.MoneyState = { selected: [], note: "", category: "-", output: "0", id: 0 }
   const [data, setData] = useState<myTypes.MoneyState>(initState)
   const [showPad, setShowPad] = useState(false)
@@ -65,7 +65,7 @@ const Money: React.FC = () => {
     const result = { ...data, createAt: dayjs().format("YYYY-MM-DD"), id: createRecordId(allRecords) }
     Record.set([...Record.get(), result])
     addRecords([result])
-    dispatch({ type: "add", data: result })
+    dispatch({ type: "addNew", data: result })
     setData(Object.assign({}, initState)) //reset
     history.goBack()
   }

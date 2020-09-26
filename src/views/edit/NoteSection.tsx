@@ -6,7 +6,7 @@ const NoteWrapper = styled.section`
   text-align: left;
   background-color: #f5f5f5;
   padding: 0 10px;
-  display: flex;  
+  display: flex;
   span {
     padding: 1em 0;
   }
@@ -18,16 +18,15 @@ const NoteWrapper = styled.section`
   }
 `
 const NoteSection: React.FC<Prop> = (prop) => {
-  const value = prop.note
-  const setValue = prop.onchange
-  const changeValue = (e: React.FocusEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
+  const { note, onchange } = prop
+  const onblur = (e: React.FocusEvent<HTMLInputElement>) => {
+    onchange(e.target.value)
   }
 
   return (
     <NoteWrapper>
       <span>{prop.title || "备注"}</span>
-      <input type="text" placeholder={prop.placeholder || "在这里填写备注"} defaultValue={value} onBlur={changeValue} />
+      <input type="text" placeholder={prop.placeholder || "在这里填写备注"} defaultValue={note} onBlur={onblur} />
     </NoteWrapper>
   )
 }

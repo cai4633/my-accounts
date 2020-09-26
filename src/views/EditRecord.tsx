@@ -1,11 +1,12 @@
-import React from "react"
+import React, { useContext, useMemo } from "react"
 import { useParams, useHistory } from "react-router-dom"
 import { useTag } from "@/hooks/useTag"
 import styled from "styled-components"
-import NoteSection from "views/edit/NoteSection"
 import Layout from "@/components/layout/Layout"
 import Button from "@/components/button/Button"
 import MHeader from "components/m-header/MHeader"
+import { findRecord } from "@/common/ts/records"
+import { Context } from "@/common/ts/context"
 
 const MyLayout = styled(Layout)`
   font-size: 16px;
@@ -40,32 +41,77 @@ type Params = { recordId: string }
 
 const EditRecord: React.FC<Prop> = (prop) => {
   const history = useHistory()
-  const { tags, findTagId, updateTag, deleteTag } = useTag()
+  const {
+    state: { allRecords },
+  } = useContext(Context)
+  const { findTagId, updateTag, deleteTag } = useTag()
   const { recordId } = useParams<Params>()
-  console.log(recordId)
-
-  const tagid = findTagId(window.parseInt(recordId))
-  const tagMap = {
-    title: "编辑标签",
+  const record: myTypes.RecordItem = useMemo(() => findRecord(window.parseInt(recordId), allRecords), [allRecords])
+  const map = {
+    title: "编辑账单",
     value: "删除标签",
     clickHandle: () => {
       deleteTag(window.parseInt(recordId))
     },
   }
-  const tagName = tagid >= 0 ? tags[tagid].name : ""
   const changeFn = (tag: string) => {
-    updateTag(tagid, tag)
+    // updateTag(tagid, tag)
   }
-  const Note = <NoteSection note={tagName} onchange={changeFn} title="标签名" placeholder={prop.placeholder || "在这里填写备注"}></NoteSection>
   const onOk = () => {
     history.goBack()
   }
+  const titles = { category: "类型", output: "金额", createAt: "日期", note: "备注" }
+  const category: { [key: string]: "收入" | "支出" } = { "+": "收入", "-": "支出" }
+  const keys = Object.keys(titles) as (keyof typeof titles)[]
+  const Note = (
+    <div className="record">
+      <ul>
+        <li className="no-pointer">
+          <label>
+            <span>{titles.category}：</span>
+            <input type="text" defaultValue={category[record?.category]} />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span>{titles.output}：</span>
+            <input
+              type="text"
+              value={record?.output}
+              onChange={(e) => {
+                record.output = e.target.value
+                console.log(record)
+              }}
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span>{titles.createAt}：</span>
+            <input
+              type="text"
+              value={record?.createAt}
+              onChange={(e) => {
+                console.log(record)
+              }}
+            />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span>{titles.note}：</span>
+            <input type="text" value={record?.note} onChange={(e) => {}} />
+          </label>
+        </li>
+      </ul>
+    </div>
+  )
   return (
     <MyLayout className="tag">
-      <MHeader onOk={onOk}>编辑账单</MHeader>
-      <main>{tagid === -1 ? <span>账单不存在或者已删除</span> : Note}</main>
+      <MHeader onOk={onOk}>{map.title}</MHeader>
+      <main>{!record ? <span>账单不存在或者已删除</span> : Note}</main>
       <div className="button-wrapper">
-        <Button title={tagMap.value} onClick={tagMap.clickHandle}></Button>
+        <Button title={map.value} onClick={map.clickHandle}></Button>
       </div>
     </MyLayout>
   )

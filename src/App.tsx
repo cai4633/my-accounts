@@ -1,7 +1,7 @@
 import Detail from "@/views/Detail"
 import Money from "@/views/Money"
 import Tags from "@/views/Tags"
-import React, { useMemo, useReducer } from "react"
+import React, { useEffect, useMemo, useReducer } from "react"
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom"
 import AddTags from "@/views/AddTags"
 import EditTag from "@/views/EditTag"
@@ -16,15 +16,18 @@ import EditRecord from "./views/EditRecord"
 
 const store: myTypes.Store = {
   newRecords: [],
+  allRecords: [],
 }
-
 const App: React.FC = () => {
   const { records } = useRecord()
   const [state, dispatch] = useReducer(reducer, store)
   const value = useMemo(() => {
-    return { allRecords: [...records, ...state.newRecords], state, dispatch }
-  }, [records, state])
+    return { state, dispatch }
+  }, [state])
 
+  useEffect(() => {
+    dispatch({ type: "addAll", data: records })
+  }, [records])
   return (
     <Context.Provider value={value}>
       <Router>
