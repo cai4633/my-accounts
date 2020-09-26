@@ -5,7 +5,6 @@ import dayjs from "dayjs"
 import { theme, mixin } from "common/ts/variable"
 import Icon from "components/icon/Icon"
 import { getDataToday } from "common/ts/detail"
-import { useTag } from "@/hooks/useTag"
 import { Context } from "@/common/ts/context"
 import RecordListItem from "@/components/RecordListItem"
 const Wrapper = styled.div`

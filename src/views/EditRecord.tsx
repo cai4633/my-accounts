@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react"
+import React, { useContext, useMemo, useRef } from "react"
 import { useParams, useHistory } from "react-router-dom"
 import { useTag } from "@/hooks/useTag"
 import styled from "styled-components"
@@ -6,6 +6,7 @@ import Layout from "@/components/layout/Layout"
 import Button from "@/components/button/Button"
 import MHeader from "components/m-header/MHeader"
 import { findRecord } from "@/common/ts/records"
+import { updateRecord } from "api/records"
 import { Context } from "@/common/ts/context"
 
 const MyLayout = styled(Layout)`
@@ -41,23 +42,26 @@ type Params = { recordId: string }
 
 const EditRecord: React.FC<Prop> = (prop) => {
   const history = useHistory()
+  const output = useRef<HTMLInputElement>(null)
+  const note = useRef<HTMLInputElement>(null)
   const {
     state: { allRecords },
+    dispatch,
   } = useContext(Context)
   const { findTagId, updateTag, deleteTag } = useTag()
   const { recordId } = useParams<Params>()
   const record: myTypes.RecordItem = useMemo(() => findRecord(window.parseInt(recordId), allRecords), [allRecords])
   const map = {
     title: "编辑账单",
-    value: "删除标签",
+    value: "删除账单",
     clickHandle: () => {
       deleteTag(window.parseInt(recordId))
     },
   }
-  const changeFn = (tag: string) => {
-    // updateTag(tagid, tag)
-  }
   const onOk = () => {
+    const newVal: myTypes.RecordItem = { ...record, note: note.current?.value || record.note, output: output.current?.value || record.output }
+    dispatch({ type: "updateAll", data: newVal })
+    updateRecord(newVal)
     history.goBack()
   }
   const titles = { category: "类型", output: "金额", createAt: "日期", note: "备注" }
@@ -66,41 +70,29 @@ const EditRecord: React.FC<Prop> = (prop) => {
   const Note = (
     <div className="record">
       <ul>
+        <li>
+          <label>
+            <span>{titles.output}：</span>
+            <input type="text" defaultValue={record?.output} ref={output} />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span>{titles.note}：</span>
+            <input type="text" defaultValue={record?.note} ref={note} />
+          </label>
+        </li>
         <li className="no-pointer">
           <label>
             <span>{titles.category}：</span>
             <input type="text" defaultValue={category[record?.category]} />
           </label>
         </li>
-        <li>
-          <label>
-            <span>{titles.output}：</span>
-            <input
-              type="text"
-              value={record?.output}
-              onChange={(e) => {
-                record.output = e.target.value
-                console.log(record)
-              }}
-            />
-          </label>
-        </li>
-        <li>
+
+        <li className="no-pointer">
           <label>
             <span>{titles.createAt}：</span>
-            <input
-              type="text"
-              value={record?.createAt}
-              onChange={(e) => {
-                console.log(record)
-              }}
-            />
-          </label>
-        </li>
-        <li>
-          <label>
-            <span>{titles.note}：</span>
-            <input type="text" value={record?.note} onChange={(e) => {}} />
+            <input type="text" defaultValue={record?.createAt} />
           </label>
         </li>
       </ul>
