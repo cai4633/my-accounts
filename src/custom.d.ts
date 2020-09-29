@@ -59,7 +59,7 @@ declare namespace myTypes {
   }
 
   interface ActionType {
-    type: "addNew" | "updateAll" | "addAll"
+    type: "addNew" | "updateAll" | "addAll" | 'deleteOne'
     data: myTypes.RecordItem | myTypes.RecordItem[]
   }
 }

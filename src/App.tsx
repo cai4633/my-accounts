@@ -14,6 +14,7 @@ import { reducer } from "reducers/reducer"
 import { useRecord } from "./hooks/useRecord"
 import EditRecord from "./views/EditRecord"
 
+// TODO how to keep-alive like vue?
 const store: myTypes.Store = {
   newRecords: [],
   allRecords: [],

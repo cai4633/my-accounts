@@ -1,4 +1,4 @@
-import { updateRecord } from "@/common/ts/records"
+import { updateRecords, deleteRecord } from "@/common/ts/records"
 
 export const actions = {
   addNew: (state: myTypes.Store, action: myTypes.ActionType): myTypes.Store => {
@@ -17,7 +17,7 @@ export const actions = {
     if (!Array.isArray(action.data)) {
       return {
         newRecords,
-        allRecords: updateRecord<myTypes.RecordItem>(action.data, allRecords),
+        allRecords: updateRecords(action.data, allRecords),
       }
     }
     return state
@@ -30,6 +30,17 @@ export const actions = {
       ? {
           newRecords: [...newRecords],
           allRecords: [...data],
+        }
+      : state
+  },
+
+  deleteOne: (state: myTypes.Store, action: myTypes.ActionType): myTypes.Store => {
+    const { newRecords, allRecords } = state
+    const { data } = action
+    return !Array.isArray(data)
+      ? {
+          newRecords: [...newRecords],
+          allRecords: deleteRecord(data, allRecords),
         }
       : state
   },

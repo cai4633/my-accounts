@@ -5,12 +5,9 @@ function createTagId() {
   return tagid
 }
 
-// 如果服务器拉取的记录为空就取随机数，否则length+1
-function createRecordId(allRecords?: myTypes.RecordItem[]) {
-  if (!allRecords || !allRecords.length) {
-    return (Math.random() * 100000000) | 0 //2^31
-  }
-  return 1000001 + allRecords.length 
+// 取随机数
+function createRecordId(allRecords?: myTypes.RecordItem[]): number {
+  return (Math.random() * 100000000) | 0 //2^31
 }
 
 function getComplementarySet<T>(subset: T[], array: T[]): T[] {

@@ -12,9 +12,7 @@ function addRecords(data: myTypes.RecordItem[]) {
     return records
   })
 
-  AV.Object.saveAll(objs).then(() => {
-    console.log("保存成功")
-  })
+  AV.Object.saveAll(objs)
 }
 function updateRecord(data: myTypes.RecordItem): void {
   const array = ["output", "note"] as const
@@ -26,10 +24,18 @@ function updateRecord(data: myTypes.RecordItem): void {
   })
 }
 
+function deleteOne(data: myTypes.RecordItem) {
+  const query = new Query("Records")
+  query.equalTo("id", data.id)
+  query.first().then((record: any) => {
+    record.destroy()
+  })
+}
+
 // 获取leancloud标签
 function getAllRecords(): Promise<myTypes.RecordItem[]> {
   const query = new Query("Records")
   return query.find().then((todo: any) => todo.map((item: { attributes: myTypes.RecordItem }) => item.attributes))
 }
 
-export { addRecords, getAllRecords, updateRecord }
+export { addRecords, getAllRecords, updateRecord, deleteOne }
