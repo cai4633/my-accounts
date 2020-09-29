@@ -1,44 +1,26 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 天天记账
+这是一款主要适配移动端的在线记账 APP。我的灵感来自ISO应用-鲨鱼记账。功能包括记账、标签和账单的增删改查以及年月周账单的部分统计功能。
+这款 web app 前端部分采用 react 框架开发。后端数据放在了 leancloud 免费数据库中，可以实现本地和服务器的数据同步。
 
-## Available Scripts
+## 主要功能界面
 
-In the project directory, you can run:
+1. 主页 / 详情页 / 记账页 / 图表页
 
-### `npm start`
+<img src='https://s1.ax1x.com/2020/09/29/0eQhkt.png' width='250px'> <img src='https://s1.ax1x.com/2020/09/29/0eQ5ff.png' width='250px'>
+<br><br>
+<img src='https://s1.ax1x.com/2020/09/29/0eQ4tP.png' width='250px'> <img src='https://s1.ax1x.com/2020/09/29/0eQop8.png' width='250px'>
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. 编辑账单页 / 编辑标签页
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+<img src='https://s1.ax1x.com/2020/09/29/0eQWTI.png' width='250px'> <img src='https://s1.ax1x.com/2020/09/29/0eQR0A.png' width='250px'>
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 主要的技术栈
 
-### `npm run build`
+1. 主要使用 react 全家桶，包括 react-router、 react-hooks等，使用 useReducer 和 useContext 来间接实现 redux 的部分功能
+2. 全程使用 typescript 开发，使用类型声明和泛型提高代码可读性和可预测性
+2. 动画部分采用 react-transition-group 官方组件来实现
+3. 部分组件直接引用 antd-mobile 组件库
+4. 图表功能依赖 echarts.js 开发
+5. 使用 sh 命令实现一键编译部署
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
